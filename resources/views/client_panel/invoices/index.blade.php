@@ -3,7 +3,7 @@
     Invoices
 @endsection
 @section('content')
-<div>
+<div class="container-fluid">
     <div class="d-flex flex-column ">
         @include('flash::message')
         <livewire:client-invoice-table/>
