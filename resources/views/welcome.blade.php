@@ -1,132 +1,1753 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}a{background-color:transparent}[hidden]{display:none}html{font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;line-height:1.5}*,:after,:before{box-sizing:border-box;border:0 solid #e2e8f0}a{color:inherit;text-decoration:inherit}svg,video{display:block;vertical-align:middle}video{max-width:100%;height:auto}.bg-white{--bg-opacity:1;background-color:#fff;background-color:rgba(255,255,255,var(--bg-opacity))}.bg-gray-100{--bg-opacity:1;background-color:#f7fafc;background-color:rgba(247,250,252,var(--bg-opacity))}.border-gray-200{--border-opacity:1;border-color:#edf2f7;border-color:rgba(237,242,247,var(--border-opacity))}.border-t{border-top-width:1px}.flex{display:flex}.grid{display:grid}.hidden{display:none}.items-center{align-items:center}.justify-center{justify-content:center}.font-semibold{font-weight:600}.h-5{height:1.25rem}.h-8{height:2rem}.h-16{height:4rem}.text-sm{font-size:.875rem}.text-lg{font-size:1.125rem}.leading-7{line-height:1.75rem}.mx-auto{margin-left:auto;margin-right:auto}.ml-1{margin-left:.25rem}.mt-2{margin-top:.5rem}.mr-2{margin-right:.5rem}.ml-2{margin-left:.5rem}.mt-4{margin-top:1rem}.ml-4{margin-left:1rem}.mt-8{margin-top:2rem}.ml-12{margin-left:3rem}.-mt-px{margin-top:-1px}.max-w-6xl{max-width:72rem}.min-h-screen{min-height:100vh}.overflow-hidden{overflow:hidden}.p-6{padding:1.5rem}.py-4{padding-top:1rem;padding-bottom:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.pt-8{padding-top:2rem}.fixed{position:fixed}.relative{position:relative}.top-0{top:0}.right-0{right:0}.shadow{box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px 0 rgba(0,0,0,.06)}.text-center{text-align:center}.text-gray-200{--text-opacity:1;color:#edf2f7;color:rgba(237,242,247,var(--text-opacity))}.text-gray-300{--text-opacity:1;color:#e2e8f0;color:rgba(226,232,240,var(--text-opacity))}.text-gray-400{--text-opacity:1;color:#cbd5e0;color:rgba(203,213,224,var(--text-opacity))}.text-gray-500{--text-opacity:1;color:#a0aec0;color:rgba(160,174,192,var(--text-opacity))}.text-gray-600{--text-opacity:1;color:#718096;color:rgba(113,128,150,var(--text-opacity))}.text-gray-700{--text-opacity:1;color:#4a5568;color:rgba(74,85,104,var(--text-opacity))}.text-gray-900{--text-opacity:1;color:#1a202c;color:rgba(26,32,44,var(--text-opacity))}.underline{text-decoration:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.w-5{width:1.25rem}.w-8{width:2rem}.w-auto{width:auto}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}@media (min-width:640px){.sm\:rounded-lg{border-radius:.5rem}.sm\:block{display:block}.sm\:items-center{align-items:center}.sm\:justify-start{justify-content:flex-start}.sm\:justify-between{justify-content:space-between}.sm\:h-20{height:5rem}.sm\:ml-0{margin-left:0}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:pt-0{padding-top:0}.sm\:text-left{text-align:left}.sm\:text-right{text-align:right}}@media (min-width:768px){.md\:border-t-0{border-top-width:0}.md\:border-l{border-left-width:1px}.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:1024px){.lg\:px-8{padding-left:2rem;padding-right:2rem}}@media (prefers-color-scheme:dark){.dark\:bg-gray-800{--bg-opacity:1;background-color:#2d3748;background-color:rgba(45,55,72,var(--bg-opacity))}.dark\:bg-gray-900{--bg-opacity:1;background-color:#1a202c;background-color:rgba(26,32,44,var(--bg-opacity))}.dark\:border-gray-700{--border-opacity:1;border-color:#4a5568;border-color:rgba(74,85,104,var(--border-opacity))}.dark\:text-white{--text-opacity:1;color:#fff;color:rgba(255,255,255,var(--text-opacity))}.dark\:text-gray-400{--text-opacity:1;color:#cbd5e0;color:rgba(203,213,224,var(--text-opacity))}.dark\:text-gray-500{--tw-text-opacity:1;color:#6b7280;color:rgba(107,114,128,var(--tw-text-opacity))}}
-        </style>
-
-        <style>
-            body {
-                font-family: 'Nunito', sans-serif;
-            }
-        </style>
-    </head>
-    <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-            @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                    @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                    <svg viewBox="0 0 651 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto text-gray-700 sm:h-20">
-                        <g clip-path="url(#clip0)" fill="#EF3B2D">
-                            <path d="M248.032 44.676h-16.466v100.23h47.394v-14.748h-30.928V44.676zM337.091 87.202c-2.101-3.341-5.083-5.965-8.949-7.875-3.865-1.909-7.756-2.864-11.669-2.864-5.062 0-9.69.931-13.89 2.792-4.201 1.861-7.804 4.417-10.811 7.661-3.007 3.246-5.347 6.993-7.016 11.239-1.672 4.249-2.506 8.713-2.506 13.389 0 4.774.834 9.26 2.506 13.459 1.669 4.202 4.009 7.925 7.016 11.169 3.007 3.246 6.609 5.799 10.811 7.66 4.199 1.861 8.828 2.792 13.89 2.792 3.913 0 7.804-.955 11.669-2.863 3.866-1.908 6.849-4.533 8.949-7.875v9.021h15.607V78.182h-15.607v9.02zm-1.431 32.503c-.955 2.578-2.291 4.821-4.009 6.73-1.719 1.91-3.795 3.437-6.229 4.582-2.435 1.146-5.133 1.718-8.091 1.718-2.96 0-5.633-.572-8.019-1.718-2.387-1.146-4.438-2.672-6.156-4.582-1.719-1.909-3.032-4.152-3.938-6.73-.909-2.577-1.36-5.298-1.36-8.161 0-2.864.451-5.585 1.36-8.162.905-2.577 2.219-4.819 3.938-6.729 1.718-1.908 3.77-3.437 6.156-4.582 2.386-1.146 5.059-1.718 8.019-1.718 2.958 0 5.656.572 8.091 1.718 2.434 1.146 4.51 2.674 6.229 4.582 1.718 1.91 3.054 4.152 4.009 6.729.953 2.577 1.432 5.298 1.432 8.162-.001 2.863-.479 5.584-1.432 8.161zM463.954 87.202c-2.101-3.341-5.083-5.965-8.949-7.875-3.865-1.909-7.756-2.864-11.669-2.864-5.062 0-9.69.931-13.89 2.792-4.201 1.861-7.804 4.417-10.811 7.661-3.007 3.246-5.347 6.993-7.016 11.239-1.672 4.249-2.506 8.713-2.506 13.389 0 4.774.834 9.26 2.506 13.459 1.669 4.202 4.009 7.925 7.016 11.169 3.007 3.246 6.609 5.799 10.811 7.66 4.199 1.861 8.828 2.792 13.89 2.792 3.913 0 7.804-.955 11.669-2.863 3.866-1.908 6.849-4.533 8.949-7.875v9.021h15.607V78.182h-15.607v9.02zm-1.432 32.503c-.955 2.578-2.291 4.821-4.009 6.73-1.719 1.91-3.795 3.437-6.229 4.582-2.435 1.146-5.133 1.718-8.091 1.718-2.96 0-5.633-.572-8.019-1.718-2.387-1.146-4.438-2.672-6.156-4.582-1.719-1.909-3.032-4.152-3.938-6.73-.909-2.577-1.36-5.298-1.36-8.161 0-2.864.451-5.585 1.36-8.162.905-2.577 2.219-4.819 3.938-6.729 1.718-1.908 3.77-3.437 6.156-4.582 2.386-1.146 5.059-1.718 8.019-1.718 2.958 0 5.656.572 8.091 1.718 2.434 1.146 4.51 2.674 6.229 4.582 1.718 1.91 3.054 4.152 4.009 6.729.953 2.577 1.432 5.298 1.432 8.162 0 2.863-.479 5.584-1.432 8.161zM650.772 44.676h-15.606v100.23h15.606V44.676zM365.013 144.906h15.607V93.538h26.776V78.182h-42.383v66.724zM542.133 78.182l-19.616 51.096-19.616-51.096h-15.808l25.617 66.724h19.614l25.617-66.724h-15.808zM591.98 76.466c-19.112 0-34.239 15.706-34.239 35.079 0 21.416 14.641 35.079 36.239 35.079 12.088 0 19.806-4.622 29.234-14.688l-10.544-8.158c-.006.008-7.958 10.449-19.832 10.449-13.802 0-19.612-11.127-19.612-16.884h51.777c2.72-22.043-11.772-40.877-33.023-40.877zm-18.713 29.28c.12-1.284 1.917-16.884 18.589-16.884 16.671 0 18.697 15.598 18.813 16.884h-37.402zM184.068 43.892c-.024-.088-.073-.165-.104-.25-.058-.157-.108-.316-.191-.46-.056-.097-.137-.176-.203-.265-.087-.117-.161-.242-.265-.345-.085-.086-.194-.148-.29-.223-.109-.085-.206-.182-.327-.252l-.002-.001-.002-.002-35.648-20.524a2.971 2.971 0 00-2.964 0l-35.647 20.522-.002.002-.002.001c-.121.07-.219.167-.327.252-.096.075-.205.138-.29.223-.103.103-.178.228-.265.345-.066.089-.147.169-.203.265-.083.144-.133.304-.191.46-.031.085-.08.162-.104.25-.067.249-.103.51-.103.776v38.979l-29.706 17.103V24.493a3 3 0 00-.103-.776c-.024-.088-.073-.165-.104-.25-.058-.157-.108-.316-.191-.46-.056-.097-.137-.176-.203-.265-.087-.117-.161-.242-.265-.345-.085-.086-.194-.148-.29-.223-.109-.085-.206-.182-.327-.252l-.002-.001-.002-.002L40.098 1.396a2.971 2.971 0 00-2.964 0L1.487 21.919l-.002.002-.002.001c-.121.07-.219.167-.327.252-.096.075-.205.138-.29.223-.103.103-.178.228-.265.345-.066.089-.147.169-.203.265-.083.144-.133.304-.191.46-.031.085-.08.162-.104.25-.067.249-.103.51-.103.776v122.09c0 1.063.568 2.044 1.489 2.575l71.293 41.045c.156.089.324.143.49.202.078.028.15.074.23.095a2.98 2.98 0 001.524 0c.069-.018.132-.059.2-.083.176-.061.354-.119.519-.214l71.293-41.045a2.971 2.971 0 001.489-2.575v-38.979l34.158-19.666a2.971 2.971 0 001.489-2.575V44.666a3.075 3.075 0 00-.106-.774zM74.255 143.167l-29.648-16.779 31.136-17.926.001-.001 34.164-19.669 29.674 17.084-21.772 12.428-43.555 24.863zm68.329-76.259v33.841l-12.475-7.182-17.231-9.92V49.806l12.475 7.182 17.231 9.92zm2.97-39.335l29.693 17.095-29.693 17.095-29.693-17.095 29.693-17.095zM54.06 114.089l-12.475 7.182V46.733l17.231-9.92 12.475-7.182v74.537l-17.231 9.921zM38.614 7.398l29.693 17.095-29.693 17.095L8.921 24.493 38.614 7.398zM5.938 29.632l12.475 7.182 17.231 9.92v79.676l.001.005-.001.006c0 .114.032.221.045.333.017.146.021.294.059.434l.002.007c.032.117.094.222.14.334.051.124.088.255.156.371a.036.036 0 00.004.009c.061.105.149.191.222.288.081.105.149.22.244.314l.008.01c.084.083.19.142.284.215.106.083.202.178.32.247l.013.005.011.008 34.139 19.321v34.175L5.939 144.867V29.632h-.001zm136.646 115.235l-65.352 37.625V148.31l48.399-27.628 16.953-9.677v33.862zm35.646-61.22l-29.706 17.102V66.908l17.231-9.92 12.475-7.182v33.841z"/>
-                        </g>
-                    </svg>
-                </div>
-
-                <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-                    <div class="grid grid-cols-1 md:grid-cols-2">
-                        <div class="p-6">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laravel.com/docs" class="underline text-gray-900 dark:text-white">Documentation</a></div>
-                            </div>
-
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laravel has wonderful, thorough documentation covering every aspect of the framework. Whether you are new to the framework or have previous experience with Laravel, we recommend reading all of the documentation from beginning to end.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laracasts.com" class="underline text-gray-900 dark:text-white">Laracasts</a></div>
-                            </div>
-
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-6 border-t border-gray-200 dark:border-gray-700">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laravel-news.com/" class="underline text-gray-900 dark:text-white">Laravel News</a></div>
-                            </div>
-
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Vibrant Ecosystem</div>
-                            </div>
-
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="underline">Forge</a>, <a href="https://vapor.laravel.com" class="underline">Vapor</a>, <a href="https://nova.laravel.com" class="underline">Nova</a>, and <a href="https://envoyer.io" class="underline">Envoyer</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="underline">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="underline">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="underline">Echo</a>, <a href="https://laravel.com/docs/horizon" class="underline">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="underline">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="underline">Telescope</a>, and more.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
-                    <div class="text-center text-sm text-gray-500 sm:text-left">
-                        <div class="flex items-center">
-                            <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor" class="-mt-px w-5 h-5 text-gray-400">
-                                <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
-
-                            <a href="https://laravel.bigcartel.com" class="ml-1 underline">
-                                Shop
+@extends('layouts.web.app')
+@section('title')
+    Landing
+@endsection
+@section('content')
+    @php $styleCss = 'style'; @endphp
+    <!--begin::Main-->
+<div class="d-flex flex-column flex-root">
+    <!--begin::Header Section-->
+    <div class="mb-0" id="home">
+        <!--begin::Wrapper-->
+        <div class="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg" {{ $styleCss }}="background-image: url({{ asset('web/media/svg/illustrations/landing.svg') }})
+        ">
+        <!--begin::Header-->
+        <div class="landing-header" data-kt-sticky="true" data-kt-sticky-name="landing-header"
+             data-kt-sticky-offset="{default: '200px', lg: '300px'}">
+            <!--begin::Container-->
+            <div class="container">
+                <!--begin::Wrapper-->
+                <div class="d-flex align-items-center justify-content-between">
+                    <!--begin::Logo-->
+                    <div class="d-flex align-items-center flex-equal">
+                        <!--begin::Mobile menu toggle-->
+                        <button class="btn btn-icon btn-active-color-primary me-3 d-flex d-lg-none"
+                                id="kt_landing_menu_toggle">
+                            <!--begin::Svg Icon | path: icons/duotone/Text/Menu.svg-->
+                            <span class="svg-icon svg-icon-2hx">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+                                                 viewBox="0 0 24 24" version="1.1">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+													<rect x="0" y="0" width="24" height="24"/>
+													<rect fill="#000000" x="4" y="5" width="16" height="3" rx="1.5"/>
+													<path d="M5.5,15 L18.5,15 C19.3284271,15 20,15.6715729 20,16.5 C20,17.3284271 19.3284271,18 18.5,18 L5.5,18 C4.67157288,18 4,17.3284271 4,16.5 C4,15.6715729 4.67157288,15 5.5,15 Z M5.5,10 L18.5,10 C19.3284271,10 20,10.6715729 20,11.5 C20,12.3284271 19.3284271,13 18.5,13 L5.5,13 C4.67157288,13 4,12.3284271 4,11.5 C4,10.6715729 4.67157288,10 5.5,10 Z"
+                                                          fill="#000000" opacity="0.3"/>
+												</g>
+											</svg>
+										</span>
+                            <!--end::Svg Icon-->
+                        </button>
+                        <!--end::Mobile menu toggle-->
+                        <!--begin::Logo image-->
+                        <a href="landing.html">
+                            <img alt="Logo" src="{{ asset('web/media/logos/logo-landing.svg') }}" class="logo-default h-25px h-lg-30px" />
+                                <img alt="Logo" src="{{ asset('web/media/logos/logo-landing-dark.svg') }}" class="logo-sticky h-20px h-lg-25px" />
                             </a>
-
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="ml-4 -mt-px w-5 h-5 text-gray-400">
-                                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                            </svg>
-
-                            <a href="https://github.com/sponsors/taylorotwell" class="ml-1 underline">
-                                Sponsor
-                            </a>
+                            <!--end::Logo image-->
                         </div>
+                        <!--end::Logo-->
+                        <!--begin::Menu wrapper-->
+                        <div class="d-lg-block" id="kt_header_nav_wrapper">
+                            <div class="d-lg-block p-5 p-lg-0" data-kt-drawer="true" data-kt-drawer-name="landing-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="200px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_landing_menu_toggle" data-kt-place="true" data-kt-place-mode="prepend" data-kt-place-parent="{default: '#kt_body', lg: '#kt_header_nav_wrapper'}">
+                                <!--begin::Menu-->
+                                <div class="menu menu-column flex-nowrap menu-rounded menu-lg-row menu-title-gray-500 menu-state-title-primary nav nav-flush fs-5 fw-bold" id="kt_landing_menu">
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin::Menu link-->
+                                        <a class="menu-link nav-link active py-3 px-4 px-xxl-6" href="#kt_body" data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Home</a>
+                                        <!--end::Menu link-->
+                                    </div>
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin::Menu link-->
+                                        <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#how-it-works" data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">How it Works</a>
+                                        <!--end::Menu link-->
+                                    </div>
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin::Menu link-->
+                                        <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#achievements" data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Achievements</a>
+                                        <!--end::Menu link-->
+                                    </div>
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin::Menu link-->
+                                        <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#team" data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Team</a>
+                                        <!--end::Menu link-->
+                                    </div>
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin::Menu link-->
+                                        <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#portfolio" data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Portfolio</a>
+                                        <!--end::Menu link-->
+                                    </div>
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin::Menu link-->
+                                        <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#pricing" data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Pricing</a>
+                                        <!--end::Menu link-->
+                                    </div>
+                                    <!--end::Menu item-->
+                                </div>
+                                <!--end::Menu-->
+                            </div>
+                        </div>
+                        <!--end::Menu wrapper-->
+                        <!--begin::Toolbar-->
+                        <div class="flex-equal text-end ms-1">
+                            <a href="{{ route('login') }}" class="btn btn-success">Sign In</a>
+                        </div>
+                        <!--end::Toolbar-->
                     </div>
-
-                    <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-                    </div>
+                    <!--end::Wrapper-->
                 </div>
+                <!--end::Container-->
             </div>
+            <!--end::Header-->
+            <!--begin::Landing hero-->
+            <div class="d-flex flex-column flex-center w-100 min-h-350px min-h-lg-500px px-9">
+                <!--begin::Heading-->
+                <div class="text-center mb-5 mb-lg-10 py-10 py-lg-20">
+                    <!--begin::Title-->
+                    <h1 class="text-white lh-base fw-bolder fs-2x fs-lg-3x mb-15">Build An Outstanding Solutions
+                        <br />with
+                        <span {{ $styleCss }}="background: linear-gradient(to right, #12CE5D 0%, #FFD80C 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">
+								<span id="kt_landing_hero_text">The Best Theme Ever</span>
+							</span></h1>
+                    <!--end::Title-->
+                    <!--begin::Action-->
+                    <a href="#" class="btn btn-primary">Try Metronic</a>
+                    <!--end::Action-->
+                </div>
+                </div>
+                <!--end::Heading-->
+                <!--begin::Clients-->
+                <div class="d-flex flex-center flex-wrap position-relative px-5">
+                    <!--begin::Client-->
+                    <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Fujifilm">
+                        <img src="{{ asset('web/media/svg/brand-logos/fujifilm.svg') }}" class="mh-30px mh-lg-40px" alt="" />
+                    </div>
+                    <!--end::Client-->
+                    <!--begin::Client-->
+                    <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Vodafone">
+                        <img src="{{ asset('web/media/svg/brand-logos/vodafone.svg') }}" class="mh-30px mh-lg-40px" alt="" />
+                    </div>
+                    <!--end::Client-->
+                    <!--begin::Client-->
+                    <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="KPMG International">
+                        <img src="{{ asset('web/media/svg/brand-logos/kpmg.svg') }}" class="mh-30px mh-lg-40px" alt="" />
+                    </div>
+                    <!--end::Client-->
+                    <!--begin::Client-->
+                    <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Nasa">
+                        <img src="{{ asset('web/media/svg/brand-logos/nasa.svg') }}" class="mh-30px mh-lg-40px" alt="" />
+                    </div>
+                    <!--end::Client-->
+                    <!--begin::Client-->
+                    <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Aspnetzero">
+                        <img src="{{ asset('web/media/svg/brand-logos/aspnetzero.svg') }}" class="mh-30px mh-lg-40px" alt="" />
+                    </div>
+                    <!--end::Client-->
+                    <!--begin::Client-->
+                    <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="AON - Empower Results">
+                        <img src="{{ asset('web/media/svg/brand-logos/aon.svg') }}" class="mh-30px mh-lg-40px" alt="" />
+                    </div>
+                    <!--end::Client-->
+                    <!--begin::Client-->
+                    <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Hewlett-Packard">
+                        <img src="{{ asset('web/media/svg/brand-logos/hp-3.svg') }}" class="mh-30px mh-lg-40px" alt="" />
+                    </div>
+                    <!--end::Client-->
+                    <!--begin::Client-->
+                    <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Truman">
+                        <img src="{{ asset('web/media/svg/brand-logos/truman.svg') }}" class="mh-30px mh-lg-40px" alt="" />
+                    </div>
+                    <!--end::Client-->
+                </div>
+                <!--end::Clients-->
+            </div>
+            <!--end::Landing hero-->
         </div>
-    </body>
-</html>
+        <!--end::Wrapper-->
+        <!--begin::Curve bottom-->
+        <div class="landing-curve landing-dark-color mb-10 mb-lg-20">
+            <svg viewBox="15 12 1470 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 11C3.93573 11.3356 7.85984 11.6689 11.7725 12H1488.16C1492.1 11.6689 1496.04 11.3356 1500 11V12H1488.16C913.668 60.3476 586.282 60.6117 11.7725 12H0V11Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <!--end::Curve bottom-->
+    </div>
+    <!--end::Header Section-->
+    <!--begin::How It Works Section-->
+    <div class="mb-n10 mb-lg-n20 z-index-2">
+        <!--begin::Container-->
+        <div class="container">
+            <!--begin::Heading-->
+            <div class="text-center mb-17">
+                <!--begin::Title-->
+                <h3 class="fs-2hx text-dark mb-5" id="how-it-works" data-kt-scroll-offset="{default: 100, lg: 150}">How it Works</h3>
+                <!--end::Title-->
+                <!--begin::Text-->
+                <div class="fs-5 text-muted fw-bold">Save thousands to millions of bucks by using single tool
+                    <br />for different amazing and great useful admin</div>
+                <!--end::Text-->
+            </div>
+            <!--end::Heading-->
+            <!--begin::Row-->
+            <div class="row w-100 gy-10 mb-md-20">
+                <!--begin::Col-->
+                <div class="col-md-4 px-5">
+                    <!--begin::Story-->
+                    <div class="text-center mb-10 mb-md-0">
+                        <!--begin::Illustration-->
+                        <img src="{{ asset('web/media/illustrations/process-2.png') }}" class="mh-125px mb-9" alt="" />
+                        <!--end::Illustration-->
+                        <!--begin::Heading-->
+                        <div class="d-flex flex-center mb-5">
+                            <!--begin::Badge-->
+                            <span class="badge badge-circle badge-light-success fw-bolder p-5 me-3 fs-3">1</span>
+                            <!--end::Badge-->
+                            <!--begin::Title-->
+                            <div class="fs-5 fs-lg-3 fw-bolder text-dark">Jane Miller</div>
+                            <!--end::Title-->
+                        </div>
+                        <!--end::Heading-->
+                        <!--begin::Description-->
+                        <div class="fw-bold fs-6 fs-lg-4 text-muted">Save thousands to millions of bucks
+                            <br />by using single tool for different
+                            <br />amazing and great</div>
+                        <!--end::Description-->
+                    </div>
+                    <!--end::Story-->
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-md-4 px-5">
+                    <!--begin::Story-->
+                    <div class="text-center mb-10 mb-md-0">
+                        <!--begin::Illustration-->
+                        <img src="{{ asset('web/media/illustrations/process-3.png') }}" class="mh-125px mb-9" alt="" />
+                        <!--end::Illustration-->
+                        <!--begin::Heading-->
+                        <div class="d-flex flex-center mb-5">
+                            <!--begin::Badge-->
+                            <span class="badge badge-circle badge-light-success fw-bolder p-5 me-3 fs-3">2</span>
+                            <!--end::Badge-->
+                            <!--begin::Title-->
+                            <div class="fs-5 fs-lg-3 fw-bolder text-dark">Setup Your App</div>
+                            <!--end::Title-->
+                        </div>
+                        <!--end::Heading-->
+                        <!--begin::Description-->
+                        <div class="fw-bold fs-6 fs-lg-4 text-muted">Save thousands to millions of bucks
+                            <br />by using single tool for different
+                            <br />amazing and great</div>
+                        <!--end::Description-->
+                    </div>
+                    <!--end::Story-->
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-md-4 px-5">
+                    <!--begin::Story-->
+                    <div class="text-center mb-10 mb-md-0">
+                        <!--begin::Illustration-->
+                        <img src="{{ asset('web/media/illustrations/process-4.png') }}" class="mh-125px mb-9" alt="" />
+                        <!--end::Illustration-->
+                        <!--begin::Heading-->
+                        <div class="d-flex flex-center mb-5">
+                            <!--begin::Badge-->
+                            <span class="badge badge-circle badge-light-success fw-bolder p-5 me-3 fs-3">3</span>
+                            <!--end::Badge-->
+                            <!--begin::Title-->
+                            <div class="fs-5 fs-lg-3 fw-bolder text-dark">Enjoy Nautica App</div>
+                            <!--end::Title-->
+                        </div>
+                        <!--end::Heading-->
+                        <!--begin::Description-->
+                        <div class="fw-bold fs-6 fs-lg-4 text-muted">Save thousands to millions of bucks
+                            <br />by using single tool for different
+                            <br />amazing and great</div>
+                        <!--end::Description-->
+                    </div>
+                    <!--end::Story-->
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Row-->
+            <!--begin::Product slider-->
+            <div class="tns tns-default">
+                <!--begin::Slider-->
+                <div data-tns="true" data-tns-loop="true" data-tns-swipe-angle="false" data-tns-speed="2000" data-tns-autoplay="true" data-tns-autoplay-timeout="18000" data-tns-controls="true" data-tns-nav="false" data-tns-items="1" data-tns-center="false" data-tns-dots="false" data-tns-prev-button="#kt_team_slider_prev1" data-tns-next-button="#kt_team_slider_next1">
+                    <!--begin::Item-->
+                    <div class="text-center px-5 pt-5 pt-lg-10 px-lg-10">
+                        <img src="{{ asset('web/media/product-demos/demo1.png') }}" class="card-rounded shadow mw-100" alt="" />
+                    </div>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <div class="text-center px-5 pt-5 pt-lg-10 px-lg-10">
+                        <img src="{{ asset('web/media/product-demos/demo2.png') }}" class="card-rounded shadow mw-100"
+                             alt=""/>
+                    </div>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <div class="text-center px-5 pt-5 pt-lg-10 px-lg-10">
+                        <img src="{{ asset('web/media/product-demos/demo4.png') }}" class="card-rounded shadow mw-100"
+                             alt=""/>
+                    </div>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <div class="text-center px-5 pt-5 pt-lg-10 px-lg-10">
+                        <img src="{{ asset('web/media/product-demos/demo5.png') }}" class="card-rounded shadow mw-100"
+                             alt=""/>
+                    </div>
+                    <!--end::Item-->
+                </div>
+                <!--end::Slider-->
+                <!--begin::Slider button-->
+                <button class="btn btn-icon btn-active-color-primary" id="kt_team_slider_prev1">
+                    <!--begin::Svg Icon | path: icons/duotone/Navigation/Angle-left.svg-->
+                    <span class="svg-icon svg-icon-3x">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                                     version="1.1">
+									<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+										<polygon points="0 0 24 0 24 24 0 24"/>
+										<path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
+                                              fill="#000000" fill-rule="nonzero"
+                                              transform="translate(12.000003, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-12.000003, -11.999999)"/>
+									</g>
+								</svg>
+							</span>
+                    <!--end::Svg Icon-->
+                </button>
+                <!--end::Slider button-->
+                <!--begin::Slider button-->
+                <button class="btn btn-icon btn-active-color-primary" id="kt_team_slider_next1">
+                    <!--begin::Svg Icon | path: icons/duotone/Navigation/Angle-right.svg-->
+                    <span class="svg-icon svg-icon-3x">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                                     version="1.1">
+									<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+										<polygon points="0 0 24 0 24 24 0 24"/>
+										<path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
+                                              fill="#000000" fill-rule="nonzero"
+                                              transform="translate(12.000003, 11.999999) rotate(-270.000000) translate(-12.000003, -11.999999)"/>
+									</g>
+								</svg>
+							</span>
+                    <!--end::Svg Icon-->
+                </button>
+                <!--end::Slider button-->
+            </div>
+            <!--end::Product slider-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::How It Works Section-->
+    <!--begin::Statistics Section-->
+    <div class="mt-sm-n10">
+        <!--begin::Curve top-->
+        <div class="landing-curve landing-dark-color">
+            <svg viewBox="15 -1 1470 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 48C4.93573 47.6644 8.85984 47.3311 12.7725 47H1489.16C1493.1 47.3311 1497.04 47.6644 1501 48V47H1489.16C914.668 -1.34764 587.282 -1.61174 12.7725 47H1V48Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <!--end::Curve top-->
+        <!--begin::Wrapper-->
+        <div class="pb-15 pt-18 landing-dark-bg">
+            <!--begin::Container-->
+            <div class="container">
+                <!--begin::Heading-->
+                <div class="text-center mt-15 mb-18" id="achievements" data-kt-scroll-offset="{default: 100, lg: 150}">
+                    <!--begin::Title-->
+                    <h3 class="fs-2hx text-white fw-bolder mb-5">We Make Things Better</h3>
+                    <!--end::Title-->
+                    <!--begin::Description-->
+                    <div class="fs-5 text-gray-700 fw-bold">Save thousands to millions of bucks by using single tool
+                        <br />for different amazing and great useful admin</div>
+                    <!--end::Description-->
+                </div>
+                <!--end::Heading-->
+                <!--begin::Statistics-->
+                <div class="d-flex flex-center">
+                    <!--begin::Items-->
+                    <div class="d-flex flex-wrap flex-center justify-content-lg-between mb-15 mx-auto w-xl-900px">
+                        <!--begin::Item-->
+                        <div class="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain" {{ $styleCss }}="background-image: url('{{ asset('web/media/svg/misc/octagon.svg') }}')">
+                            <!--begin::Symbol-->
+                            <!--begin::Svg Icon | path: icons/duotone/Interface/Grid.svg-->
+                            <span class="svg-icon svg-icon-2tx svg-icon-white mb-3">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+											<path opacity="0.25" d="M13.1721 15.4724C13.3364 14.2725 14.2725 13.3364 15.4724 13.1721C16.1606 13.0778 16.9082 13 17.5 13C18.0918 13 18.8394 13.0778 19.5276 13.1721C20.7275 13.3364 21.6636 14.2725 21.8279 15.4724C21.9222 16.1606 22 16.9082 22 17.5C22 18.0918 21.9222 18.8394 21.8279 19.5276C21.6636 20.7275 20.7275 21.6636 19.5276 21.8279C18.8394 21.9222 18.0918 22 17.5 22C16.9082 22 16.1606 21.9222 15.4724 21.8279C14.2725 21.6636 13.3364 20.7275 13.1721 19.5276C13.0778 18.8394 13 18.0918 13 17.5C13 16.9082 13.0778 16.1606 13.1721 15.4724Z" fill="#12131A" />
+											<path opacity="0.25" d="M2.17209 15.4724C2.33642 14.2725 3.27253 13.3364 4.47244 13.1721C5.16065 13.0778 5.90816 13 6.5 13C7.09184 13 7.83935 13.0778 8.52756 13.1721C9.72747 13.3364 10.6636 14.2725 10.8279 15.4724C10.9222 16.1606 11 16.9082 11 17.5C11 18.0918 10.9222 18.8394 10.8279 19.5276C10.6636 20.7275 9.72747 21.6636 8.52756 21.8279C7.83935 21.9222 7.09184 22 6.5 22C5.90816 22 5.16065 21.9222 4.47244 21.8279C3.27253 21.6636 2.33642 20.7275 2.17209 19.5276C2.07784 18.8394 2 18.0918 2 17.5C2 16.9082 2.07784 16.1606 2.17209 15.4724Z" fill="#12131A" />
+											<path opacity="0.25" d="M13.1721 4.47244C13.3364 3.27253 14.2725 2.33642 15.4724 2.17209C16.1606 2.07784 16.9082 2 17.5 2C18.0918 2 18.8394 2.07784 19.5276 2.17209C20.7275 2.33642 21.6636 3.27253 21.8279 4.47244C21.9222 5.16065 22 5.90816 22 6.5C22 7.09184 21.9222 7.83935 21.8279 8.52756C21.6636 9.72747 20.7275 10.6636 19.5276 10.8279C18.8394 10.9222 18.0918 11 17.5 11C16.9082 11 16.1606 10.9222 15.4724 10.8279C14.2725 10.6636 13.3364 9.72747 13.1721 8.52756C13.0778 7.83935 13 7.09184 13 6.5C13 5.90816 13.0778 5.16065 13.1721 4.47244Z" fill="#12131A" />
+											<path d="M2.17209 4.47244C2.33642 3.27253 3.27253 2.33642 4.47244 2.17209C5.16065 2.07784 5.90816 2 6.5 2C7.09184 2 7.83935 2.07784 8.52756 2.17209C9.72747 2.33642 10.6636 3.27253 10.8279 4.47244C10.9222 5.16065 11 5.90816 11 6.5C11 7.09184 10.9222 7.83935 10.8279 8.52756C10.6636 9.72747 9.72747 10.6636 8.52756 10.8279C7.83935 10.9222 7.09184 11 6.5 11C5.90816 11 5.16065 10.9222 4.47244 10.8279C3.27253 10.6636 2.33642 9.72747 2.17209 8.52756C2.07784 7.83935 2 7.09184 2 6.5C2 5.90816 2.07784 5.16065 2.17209 4.47244Z" fill="#12131A" />
+										</svg>
+									</span>
+                            <!--end::Svg Icon-->
+                            <!--end::Symbol-->
+                            <!--begin::Info-->
+                            <div class="mb-0">
+                                <!--begin::Value-->
+                                <div class="fs-lg-2hx fs-2x fw-bolder text-white d-flex flex-center">
+                                    <div class="min-w-70px" data-kt-countup="true" data-kt-countup-value="700" data-kt-countup-suffix="+">0</div>
+                                </div>
+                                <!--end::Value-->
+                                <!--begin::Label-->
+                                <span class="text-gray-600 fw-bold fs-5 lh-0">Known Companies</span>
+                                <!--end::Label-->
+                            </div>
+                            <!--end::Info-->
+                        </div>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <div class="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain" {{ $styleCss }}="background-image: url('{{ asset('web/media/svg/misc/octagon.svg') }}')">
+                            <!--begin::Symbol-->
+                            <!--begin::Svg Icon | path: icons/duotone/Interface/Pie-04.svg-->
+                            <span class="svg-icon svg-icon-2tx svg-icon-white mb-3">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+											<path opacity="0.25" fill-rule="evenodd" clip-rule="evenodd" d="M13.998 21.9445C13.4491 22.0057 13 21.5523 13 21L13 14C13 13.4477 13.4477 13 14 13L21 13C21.5523 13 22.0058 13.4491 21.9445 13.998C21.8509 14.8372 21.6394 15.6609 21.3149 16.4442C20.8626 17.5361 20.1997 18.5282 19.364 19.364C18.5282 20.1997 17.5361 20.8626 16.4442 21.3149C15.6609 21.6394 14.8373 21.8509 13.998 21.9445Z" fill="#12131A" />
+											<path fill-rule="evenodd" clip-rule="evenodd" d="M21.9445 10.0019C22.0057 10.5508 21.5523 10.9999 21 10.9999L14 10.9999C13.4477 10.9999 13 10.5521 13 9.99986L13 2.99986C13 2.44758 13.4491 1.99412 13.9979 2.05536C14.8372 2.149 15.6609 2.3605 16.4441 2.68495C17.5361 3.13724 18.5282 3.80017 19.3639 4.6359C20.1997 5.47163 20.8626 6.46378 21.3149 7.55571C21.6393 8.33899 21.8508 9.16262 21.9445 10.0019Z" fill="#12131A" />
+											<path opacity="0.25" fill-rule="evenodd" clip-rule="evenodd" d="M10.002 3.05559C10.5509 2.99437 11 3.44784 11 4.00012L11 20.0001C11 20.5524 10.5509 21.0059 10.002 20.9446C7.98222 20.7193 6.08694 19.815 4.63604 18.3641C2.94821 16.6763 2 14.3871 2 12.0001C2 9.61317 2.94821 7.32398 4.63604 5.63616C6.08694 4.18525 7.98222 3.2809 10.002 3.05559Z" fill="#12131A" />
+										</svg>
+									</span>
+                            <!--end::Svg Icon-->
+                            <!--end::Symbol-->
+                            <!--begin::Info-->
+                            <div class="mb-0">
+                                <!--begin::Value-->
+                                <div class="fs-lg-2hx fs-2x fw-bolder text-white d-flex flex-center">
+                                    <div class="min-w-70px" data-kt-countup="true" data-kt-countup-value="80" data-kt-countup-suffix="K+">0</div>
+                                </div>
+                                <!--end::Value-->
+                                <!--begin::Label-->
+                                <span class="text-gray-600 fw-bold fs-5 lh-0">Statistic Reports</span>
+                                <!--end::Label-->
+                            </div>
+                            <!--end::Info-->
+                        </div>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <div class="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain" {{ $styleCss }}="background-image: url('{{ asset('web/media/svg/misc/octagon.svg') }}')">
+                            <!--begin::Symbol-->
+                            <!--begin::Svg Icon | path: icons/duotone/Shopping/Cart4.svg-->
+                            <span class="svg-icon svg-icon-2tx svg-icon-white mb-3">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+											<path opacity="0.25" d="M3.19406 11.1644C3.09247 10.5549 3.56251 10 4.18045 10H19.8195C20.4375 10 20.9075 10.5549 20.8059 11.1644L19.4178 19.4932C19.1767 20.9398 17.9251 22 16.4586 22H7.54138C6.07486 22 4.82329 20.9398 4.58219 19.4932L3.19406 11.1644Z" fill="#7E8299" />
+											<path d="M2 9.5C2 8.67157 2.67157 8 3.5 8H20.5C21.3284 8 22 8.67157 22 9.5C22 10.3284 21.3284 11 20.5 11H3.5C2.67157 11 2 10.3284 2 9.5Z" fill="#7E8299" />
+											<path d="M10 13C9.44772 13 9 13.4477 9 14V18C9 18.5523 9.44772 19 10 19C10.5523 19 11 18.5523 11 18V14C11 13.4477 10.5523 13 10 13Z" fill="#7E8299" />
+											<path d="M14 13C13.4477 13 13 13.4477 13 14V18C13 18.5523 13.4477 19 14 19C14.5523 19 15 18.5523 15 18V14C15 13.4477 14.5523 13 14 13Z" fill="#7E8299" />
+											<g opacity="0.25">
+												<path d="M10.7071 3.70711C11.0976 3.31658 11.0976 2.68342 10.7071 2.29289C10.3166 1.90237 9.68342 1.90237 9.29289 2.29289L4.29289 7.29289C3.90237 7.68342 3.90237 8.31658 4.29289 8.70711C4.68342 9.09763 5.31658 9.09763 5.70711 8.70711L10.7071 3.70711Z" fill="#7E8299" />
+												<path d="M13.2929 3.70711C12.9024 3.31658 12.9024 2.68342 13.2929 2.29289C13.6834 1.90237 14.3166 1.90237 14.7071 2.29289L19.7071 7.29289C20.0976 7.68342 20.0976 8.31658 19.7071 8.70711C19.3166 9.09763 18.6834 9.09763 18.2929 8.70711L13.2929 3.70711Z" fill="#7E8299" />
+											</g>
+										</svg>
+									</span>
+                            <!--end::Svg Icon-->
+                            <!--end::Symbol-->
+                            <!--begin::Info-->
+                            <div class="mb-0">
+                                <!--begin::Value-->
+                                <div class="fs-lg-2hx fs-2x fw-bolder text-white d-flex flex-center">
+                                    <div class="min-w-70px" data-kt-countup="true" data-kt-countup-value="35" data-kt-countup-suffix="M+">0</div>
+                                </div>
+                                <!--end::Value-->
+                                <!--begin::Label-->
+                                <span class="text-gray-600 fw-bold fs-5 lh-0">Secure Payments</span>
+                                <!--end::Label-->
+                            </div>
+                            <!--end::Info-->
+                        </div>
+                        <!--end::Item-->
+                    </div>
+                    <!--end::Items-->
+                </div>
+                <!--end::Statistics-->
+                <!--begin::Testimonial-->
+                <div class="fs-2 fw-bold text-muted text-center mb-3">
+                    <span class="fs-1 lh-1 text-gray-700">“</span>When you care about your topic, you’ll write about it in a
+                    <br />
+                    <span class="text-gray-700 me-1">more powerful</span>, emotionally expressive way
+                    <span class="fs-1 lh-1 text-gray-700">“</span></div>
+                <!--end::Testimonial-->
+                <!--begin::Author-->
+                <div class="fs-2 fw-bold text-muted text-center">
+                    <a href="account/security.html" class="link-primary fs-4 fw-bolder">Marcus Levy,</a>
+                    <span class="fs-4 fw-bolder text-gray-600">KeenThemes CEO</span>
+                </div>
+                <!--end::Author-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Wrapper-->
+        <!--begin::Curve bottom-->
+        <div class="landing-curve landing-dark-color">
+            <svg viewBox="15 12 1470 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 11C3.93573 11.3356 7.85984 11.6689 11.7725 12H1488.16C1492.1 11.6689 1496.04 11.3356 1500 11V12H1488.16C913.668 60.3476 586.282 60.6117 11.7725 12H0V11Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <!--end::Curve bottom-->
+    </div>
+    <!--end::Statistics Section-->
+    <!--begin::Team Section-->
+    <div class="py-10 py-lg-20">
+        <!--begin::Container-->
+        <div class="container">
+            <!--begin::Heading-->
+            <div class="text-center mb-12">
+                <!--begin::Title-->
+                <h3 class="fs-2hx text-dark mb-5" id="team" data-kt-scroll-offset="{default: 100, lg: 150}">Our Great Team</h3>
+                <!--end::Title-->
+                <!--begin::Sub-title-->
+                <div class="fs-5 text-muted fw-bold">It’s no doubt that when a development takes longer to complete, additional costs to
+                    <br />integrate and test each extra feature creeps up and haunts most of us.</div>
+                <!--end::Sub-title=-->
+            </div>
+            <!--end::Heading-->
+            <!--begin::Slider-->
+            <div class="tns tns-default">
+                <!--begin::Wrapper-->
+                <div data-tns="true" data-tns-loop="true" data-tns-swipe-angle="false" data-tns-speed="2000" data-tns-autoplay="true" data-tns-autoplay-timeout="18000" data-tns-controls="true" data-tns-nav="false" data-tns-items="1" data-tns-center="false" data-tns-dots="false" data-tns-prev-button="#kt_team_slider_prev" data-tns-next-button="#kt_team_slider_next" data-tns-responsive="{1200: {items: 3}, 992: {items: 2}}">
+                    <!--begin::Item-->
+                    <div class="text-center">
+                        <!--begin::Photo-->
+                        <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" {{ $styleCss }}="background-image:url('{{ asset('web/media/avatars/150-2.jpg') }}')"></div>
+                        <!--end::Photo-->
+                        <!--begin::Person-->
+                        <div class="mb-0">
+                            <!--begin::Name-->
+                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-3">Paul Miles</a>
+                            <!--end::Name-->
+                            <!--begin::Position-->
+                            <div class="text-muted fs-6 fw-bold mt-1">Development Lead</div>
+                            <!--begin::Position-->
+                        </div>
+                        <!--end::Person-->
+                    </div>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <div class="text-center">
+                        <!--begin::Photo-->
+                        <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" {{ $styleCss }}="background-image:url('{{ asset('web/media/avatars/150-3.jpg') }}')"></div>
+                        <!--end::Photo-->
+                        <!--begin::Person-->
+                        <div class="mb-0">
+                            <!--begin::Name-->
+                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-3">Melisa Marcus</a>
+                            <!--end::Name-->
+                            <!--begin::Position-->
+                            <div class="text-muted fs-6 fw-bold mt-1">Creative Director</div>
+                            <!--begin::Position-->
+                        </div>
+                        <!--end::Person-->
+                    </div>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <div class="text-center">
+                        <!--begin::Photo-->
+                        <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" {{ $styleCss }}="background-image:url('{{ asset('web/media/avatars/150-4.jpg') }}')"></div>
+                        <!--end::Photo-->
+                        <!--begin::Person-->
+                        <div class="mb-0">
+                            <!--begin::Name-->
+                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-3">David Nilson</a>
+                            <!--end::Name-->
+                            <!--begin::Position-->
+                            <div class="text-muted fs-6 fw-bold mt-1">Python Expert</div>
+                            <!--begin::Position-->
+                        </div>
+                        <!--end::Person-->
+                    </div>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <div class="text-center">
+                        <!--begin::Photo-->
+                        <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" {{ $styleCss }}="background-image:url('{{ asset('web/media/avatars/150-5.jpg') }}')"></div>
+                        <!--end::Photo-->
+                        <!--begin::Person-->
+                        <div class="mb-0">
+                            <!--begin::Name-->
+                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-3">Anne Clarc</a>
+                            <!--end::Name-->
+                            <!--begin::Position-->
+                            <div class="text-muted fs-6 fw-bold mt-1">Project Manager</div>
+                            <!--begin::Position-->
+                        </div>
+                        <!--end::Person-->
+                    </div>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <div class="text-center">
+                        <!--begin::Photo-->
+                        <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" {{ $styleCss }}="background-image:url('{{ asset('web/media/avatars/150-6.jpg') }}')"></div>
+                        <!--end::Photo-->
+                        <!--begin::Person-->
+                        <div class="mb-0">
+                            <!--begin::Name-->
+                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-3">Ricky Hunt</a>
+                            <!--end::Name-->
+                            <!--begin::Position-->
+                            <div class="text-muted fs-6 fw-bold mt-1">Art Director</div>
+                            <!--begin::Position-->
+                        </div>
+                        <!--end::Person-->
+                    </div>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <div class="text-center">
+                        <!--begin::Photo-->
+                        <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" {{ $styleCss }}="background-image:url('{{ asset('web/media/avatars/150-7.jpg') }}')"></div>
+                        <!--end::Photo-->
+                        <!--begin::Person-->
+                        <div class="mb-0">
+                            <!--begin::Name-->
+                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-3">Alice Wayde</a>
+                            <!--end::Name-->
+                            <!--begin::Position-->
+                            <div class="text-muted fs-6 fw-bold mt-1">Marketing Manager</div>
+                            <!--begin::Position-->
+                        </div>
+                        <!--end::Person-->
+                    </div>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <div class="text-center">
+                        <!--begin::Photo-->
+                        <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" {{ $styleCss }}="background-image:url('{{ asset('web/media/avatars/150-8.jpg') }}')"></div>
+    <!--end::Photo-->
+    <!--begin::Person-->
+    <div class="mb-0">
+        <!--begin::Name-->
+        <a href="#" class="text-dark fw-bolder text-hover-primary fs-3">Carles Puyol</a>
+        <!--end::Name-->
+        <!--begin::Position-->
+        <div class="text-muted fs-6 fw-bold mt-1">QA Managers</div>
+        <!--begin::Position-->
+    </div>
+    <!--end::Person-->
+    </div>
+    <!--end::Item-->
+    </div>
+    <!--end::Wrapper-->
+    <!--begin::Button-->
+    <button class="btn btn-icon btn-active-color-primary" id="kt_team_slider_prev">
+        <!--begin::Svg Icon | path: icons/duotone/Navigation/Angle-left.svg-->
+        <span class="svg-icon svg-icon-3x">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                                     version="1.1">
+									<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+										<polygon points="0 0 24 0 24 24 0 24"/>
+										<path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
+                                              fill="#000000" fill-rule="nonzero"
+                                              transform="translate(12.000003, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-12.000003, -11.999999)"/>
+									</g>
+								</svg>
+							</span>
+        <!--end::Svg Icon-->
+    </button>
+    <!--end::Button-->
+    <!--begin::Button-->
+    <button class="btn btn-icon btn-active-color-primary" id="kt_team_slider_next">
+        <!--begin::Svg Icon | path: icons/duotone/Navigation/Angle-right.svg-->
+        <span class="svg-icon svg-icon-3x">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                                     version="1.1">
+									<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+										<polygon points="0 0 24 0 24 24 0 24"/>
+										<path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z"
+                                              fill="#000000" fill-rule="nonzero"
+                                              transform="translate(12.000003, 11.999999) rotate(-270.000000) translate(-12.000003, -11.999999)"/>
+									</g>
+								</svg>
+							</span>
+        <!--end::Svg Icon-->
+    </button>
+    <!--end::Button-->
+    </div>
+    <!--end::Slider-->
+    </div>
+    <!--end::Container-->
+    </div>
+    <!--end::Team Section-->
+    <!--begin::Projects Section-->
+    <div class="mb-lg-n15 position-relative z-index-2">
+        <!--begin::Container-->
+        <div class="container">
+            <!--begin::Card-->
+            <div class="card" {{ $styleCss }}="filter: drop-shadow(0px 0px 40px rgba(68, 81, 96, 0.08))">
+                <!--begin::Card body-->
+                <div class="card-body p-lg-20">
+                    <!--begin::Heading-->
+                    <div class="text-center mb-5 mb-lg-10">
+                        <!--begin::Title-->
+                        <h3 class="fs-2hx text-dark mb-5" id="portfolio" data-kt-scroll-offset="{default: 100, lg: 150}">Our Projects</h3>
+                        <!--end::Title-->
+                    </div>
+                    <!--end::Heading-->
+                    <!--begin::Tabs wrapper-->
+                    <div class="d-flex flex-center mb-5 mb-lg-15">
+                        <!--begin::Tabs-->
+                        <ul class="nav border-transparent flex-center fs-5 fw-bold">
+                            <li class="nav-item">
+                                <a class="nav-link text-gray-500 text-active-primary px-3 px-lg-6 active" href="#" data-bs-toggle="tab" data-bs-target="#kt_landing_projects_latest">Latest</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-gray-500 text-active-primary px-3 px-lg-6" href="#" data-bs-toggle="tab" data-bs-target="#kt_landing_projects_web_design">Web Design</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-gray-500 text-active-primary px-3 px-lg-6" href="#" data-bs-toggle="tab" data-bs-target="#kt_landing_projects_mobile_apps">Mobile Apps</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-gray-500 text-active-primary px-3 px-lg-6" href="#" data-bs-toggle="tab" data-bs-target="#kt_landing_projects_development">Development</a>
+                            </li>
+                        </ul>
+                        <!--end::Tabs-->
+                    </div>
+                    <!--end::Tabs wrapper-->
+                    <!--begin::Tabs content-->
+                    <div class="tab-content">
+                        <!--begin::Tab pane-->
+                        <div class="tab-pane fade show active" id="kt_landing_projects_latest">
+                            <!--begin::Row-->
+                            <div class="row g-10">
+                                <!--begin::Col-->
+                                <div class="col-lg-6">
+                                    <!--begin::Item-->
+                                    <a class="d-block card-rounded overlay h-lg-100" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x600/img-23.jpg') }}">
+                                        <!--begin::Image-->
+                                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-lg-100 min-h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-23.jpg') }}')"></div>
+                                        <!--end::Image-->
+                                        <!--begin::Action-->
+                                        <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                            <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                        </div>
+                                        <!--end::Action-->
+                                    </a>
+                                    <!--end::Item-->
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-lg-6">
+                                    <!--begin::Row-->
+                                    <div class="row g-10 mb-10">
+                                        <!--begin::Col-->
+                                        <div class="col-lg-6">
+                                            <!--begin::Item-->
+                                            <a class="d-block card-rounded overlay" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x600/img-22.jpg') }}">
+                                                <!--begin::Image-->
+                                                <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-22.jpg') }}')"></div>
+                                                <!--end::Image-->
+                                                <!--begin::Action-->
+                                                <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                                    <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                                </div>
+                                                <!--end::Action-->
+                                            </a>
+                                            <!--end::Item-->
+                                        </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-6">
+                                            <!--begin::Item-->
+                                            <a class="d-block card-rounded overlay" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x600/img-21.jpg') }}">
+                                                <!--begin::Image-->
+                                                <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-21.jpg') }}')"></div>
+                                                <!--end::Image-->
+                                                <!--begin::Action-->
+                                                <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                                    <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                                </div>
+                                                <!--end::Action-->
+                                            </a>
+                                            <!--end::Item-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Row-->
+                                    <!--begin::Item-->
+                                    <a class="d-block card-rounded overlay" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x400/img-20.jpg') }}">
+                                        <!--begin::Image-->
+                                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-20.jpg') }}')"></div>
+                                        <!--end::Image-->
+                                        <!--begin::Action-->
+                                        <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                            <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                        </div>
+                                        <!--end::Action-->
+                                    </a>
+                                    <!--end::Item-->
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Row-->
+                        </div>
+                        <!--end::Tab pane-->
+                        <!--begin::Tab pane-->
+                        <div class="tab-pane fade" id="kt_landing_projects_web_design">
+                            <!--begin::Row-->
+                            <div class="row g-10">
+                                <!--begin::Col-->
+                                <div class="col-lg-6">
+                                    <!--begin::Item-->
+                                    <a class="d-block card-rounded overlay h-lg-100" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x600/img-11.jpg') }}">
+                                        <!--begin::Image-->
+                                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-lg-100 min-h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-11.jpg') }}')"></div>
+                                        <!--end::Image-->
+                                        <!--begin::Action-->
+                                        <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                            <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                        </div>
+                                        <!--end::Action-->
+                                    </a>
+                                    <!--end::Item-->
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-lg-6">
+                                    <!--begin::Row-->
+                                    <div class="row g-10 mb-10">
+                                        <!--begin::Col-->
+                                        <div class="col-lg-6">
+                                            <!--begin::Item-->
+                                            <a class="d-block card-rounded overlay" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x600/img-12.jpg') }}">
+                                                <!--begin::Image-->
+                                                <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-12.jpg') }}')"></div>
+                                                <!--end::Image-->
+                                                <!--begin::Action-->
+                                                <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                                    <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                                </div>
+                                                <!--end::Action-->
+                                            </a>
+                                            <!--end::Item-->
+                                        </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-6">
+                                            <!--begin::Item-->
+                                            <a class="d-block card-rounded overlay" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x600/img-21.jpg') }}">
+                                                <!--begin::Image-->
+                                                <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-21.jpg') }}')"></div>
+                                                <!--end::Image-->
+                                                <!--begin::Action-->
+                                                <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                                    <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                                </div>
+                                                <!--end::Action-->
+                                            </a>
+                                            <!--end::Item-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Row-->
+                                    <!--begin::Item-->
+                                    <a class="d-block card-rounded overlay" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x400/img-20.jpg') }}">
+                                        <!--begin::Image-->
+                                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-20.jpg') }}')"></div>
+                                        <!--end::Image-->
+                                        <!--begin::Action-->
+                                        <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                            <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                        </div>
+                                        <!--end::Action-->
+                                    </a>
+                                    <!--end::Item-->
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Row-->
+                        </div>
+                        <!--end::Tab pane-->
+                        <!--begin::Tab pane-->
+                        <div class="tab-pane fade" id="kt_landing_projects_mobile_apps">
+                            <!--begin::Row-->
+                            <div class="row g-10">
+                                <!--begin::Col-->
+                                <div class="col-lg-6">
+                                    <!--begin::Row-->
+                                    <div class="row g-10 mb-10">
+                                        <!--begin::Col-->
+                                        <div class="col-lg-6">
+                                            <!--begin::Item-->
+                                            <a class="d-block card-rounded overlay" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x600/img-16.jpg') }}">
+                                                <!--begin::Image-->
+                                                <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-16.jpg') }}')"></div>
+                                                <!--end::Image-->
+                                                <!--begin::Action-->
+                                                <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                                    <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                                </div>
+                                                <!--end::Action-->
+                                            </a>
+                                            <!--end::Item-->
+                                        </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-6">
+                                            <!--begin::Item-->
+                                            <a class="d-block card-rounded overlay" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x600/img-12.jpg') }}">
+                                                <!--begin::Image-->
+                                                <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-12.jpg') }}')"></div>
+                                                <!--end::Image-->
+                                                <!--begin::Action-->
+                                                <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                                    <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                                </div>
+                                                <!--end::Action-->
+                                            </a>
+                                            <!--end::Item-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Row-->
+                                    <!--begin::Item-->
+                                    <a class="d-block card-rounded overlay" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x400/img-15.jpg') }}">
+                                        <!--begin::Image-->
+                                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-15.jpg') }}')"></div>
+                                        <!--end::Image-->
+                                        <!--begin::Action-->
+                                        <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                            <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                        </div>
+                                        <!--end::Action-->
+                                    </a>
+                                    <!--end::Item-->
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-lg-6">
+                                    <!--begin::Item-->
+                                    <a class="d-block card-rounded overlay h-lg-100" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x600/img-23.jpg') }}">
+                                        <!--begin::Image-->
+                                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-lg-100 min-h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-23.jpg') }}')"></div>
+                                        <!--end::Image-->
+                                        <!--begin::Action-->
+                                        <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                            <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                        </div>
+                                        <!--end::Action-->
+                                    </a>
+                                    <!--end::Item-->
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Row-->
+                        </div>
+                        <!--end::Tab pane-->
+                        <!--begin::Tab pane-->
+                        <div class="tab-pane fade" id="kt_landing_projects_development">
+                            <!--begin::Row-->
+                            <div class="row g-10">
+                                <!--begin::Col-->
+                                <div class="col-lg-6">
+                                    <!--begin::Item-->
+                                    <a class="d-block card-rounded overlay h-lg-100" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x600/img-15.jpg') }}">
+                                        <!--begin::Image-->
+                                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-lg-100 min-h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-15.jpg') }}')"></div>
+                                        <!--end::Image-->
+                                        <!--begin::Action-->
+                                        <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                            <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                        </div>
+                                        <!--end::Action-->
+                                    </a>
+                                    <!--end::Item-->
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-lg-6">
+                                    <!--begin::Row-->
+                                    <div class="row g-10 mb-10">
+                                        <!--begin::Col-->
+                                        <div class="col-lg-6">
+                                            <!--begin::Item-->
+                                            <a class="d-block card-rounded overlay" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x600/img-22.jpg') }}">
+                                                <!--begin::Image-->
+                                                <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-22.jpg') }}')"></div>
+                                                <!--end::Image-->
+                                                <!--begin::Action-->
+                                                <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                                    <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                                </div>
+                                                <!--end::Action-->
+                                            </a>
+                                            <!--end::Item-->
+                                        </div>
+                                        <!--end::Col-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-6">
+                                            <!--begin::Item-->
+                                            <a class="d-block card-rounded overlay" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x600/img-21.jpg') }}">
+                                                <!--begin::Image-->
+                                                <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-21.jpg') }}')"></div>
+                                                <!--end::Image-->
+                                                <!--begin::Action-->
+                                                <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                                    <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                                </div>
+                                                <!--end::Action-->
+                                            </a>
+                                            <!--end::Item-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Row-->
+                                    <!--begin::Item-->
+                                    <a class="d-block card-rounded overlay" data-fslightbox="lightbox-projects" href="{{ asset('web/media/stock/600x400/img-14.jpg') }}">
+                                        <!--begin::Image-->
+                                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-250px" {{ $styleCss }}="background-image:url('{{ asset('web/media/stock/600x600/img-14.jpg') }}')"></div>
+                                        <!--end::Image-->
+                                        <!--begin::Action-->
+                                        <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                            <i class="bi bi-eye-fill fs-3x text-white"></i>
+                                        </div>
+                                        <!--end::Action-->
+                                    </a>
+                                    <!--end::Item-->
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Row-->
+                        </div>
+                        <!--end::Tab pane-->
+                    </div>
+                    <!--end::Tabs content-->
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Card-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Projects Section-->
+    <!--begin::Pricing Section-->
+    <div class="mt-sm-n20">
+        <!--begin::Curve top-->
+        <div class="landing-curve landing-dark-color">
+            <svg viewBox="15 -1 1470 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 48C4.93573 47.6644 8.85984 47.3311 12.7725 47H1489.16C1493.1 47.3311 1497.04 47.6644 1501 48V47H1489.16C914.668 -1.34764 587.282 -1.61174 12.7725 47H1V48Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <!--end::Curve top-->
+        <!--begin::Wrapper-->
+        <div class="py-20 landing-dark-bg">
+            <!--begin::Container-->
+            <div class="container">
+                <!--begin::Plans-->
+                <div class="d-flex flex-column container pt-lg-20">
+                    <!--begin::Heading-->
+                    <div class="mb-13 text-center">
+                        <h1 class="fs-2hx fw-bolder text-white mb-5" id="pricing" data-kt-scroll-offset="{default: 100, lg: 150}">Clear Pricing Makes it Easy</h1>
+                        <div class="text-gray-600 fw-bold fs-5">Save thousands to millions of bucks by using single tool for different
+                            <br />amazing and outstanding cool and great useful admin</div>
+                    </div>
+                    <!--end::Heading-->
+                    <!--begin::Pricing-->
+                    <div class="text-center" id="kt_pricing">
+                        <!--begin::Nav group-->
+                        <div class="nav-group landing-dark-bg d-inline-flex mb-15" data-kt-buttons="true" {{ $styleCss }}="border: 1px dashed #2B4666;">
+                            <a href="#" class="btn btn-color-gray-600 btn-active btn-active-success px-6 py-3 me-2 active" data-kt-plan="month">Monthly</a>
+                            <a href="#" class="btn btn-color-gray-600 btn-active btn-active-success px-6 py-3" data-kt-plan="annual">Annual</a>
+                        </div>
+                        <!--end::Nav group-->
+                        <!--begin::Row-->
+                        <div class="row g-10">
+                            <!--begin::Col-->
+                            <div class="col-xl-4">
+                                <div class="d-flex h-100 align-items-center">
+                                    <!--begin::Option-->
+                                    <div class="w-100 d-flex flex-column flex-center rounded-3 bg-white py-15 px-10">
+                                        <!--begin::Heading-->
+                                        <div class="mb-7 text-center">
+                                            <!--begin::Title-->
+                                            <h1 class="text-dark mb-5 fw-boldest">Startup</h1>
+                                            <!--end::Title-->
+                                            <!--begin::Description-->
+                                            <div class="text-gray-400 fw-bold mb-5">Best Settings for Startups</div>
+                                            <!--end::Description-->
+                                            <!--begin::Price-->
+                                            <div class="text-center">
+                                                <span class="mb-2 text-primary">$</span>
+                                                <span class="fs-3x fw-bolder text-primary" data-kt-plan-price-month="99" data-kt-plan-price-annual="999">99</span>
+                                                <span class="fs-7 fw-bold opacity-50" data-kt-plan-price-month="Mon" data-kt-plan-price-annual="Ann">/ Mon</span>
+                                            </div>
+                                            <!--end::Price-->
+                                        </div>
+                                        <!--end::Heading-->
+                                        <!--begin::Features-->
+                                        <div class="w-100 mb-10">
+                                            <!--begin::Item-->
+                                            <div class="d-flex flex-stack mb-5">
+                                                <span class="fw-bold fs-6 text-gray-800 text-start pe-3">Up to 10 Active Users</span>
+                                                <!--begin::Svg Icon | path: icons/duotone/Code/Done-circle.svg-->
+                                                <span class="svg-icon svg-icon-1 svg-icon-success">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+																<path d="M16.7689447,7.81768175 C17.1457787,7.41393107 17.7785676,7.39211077 18.1823183,7.76894473 C18.5860689,8.1457787 18.6078892,8.77856757 18.2310553,9.18231825 L11.2310553,16.6823183 C10.8654446,17.0740439 10.2560456,17.107974 9.84920863,16.7592566 L6.34920863,13.7592566 C5.92988278,13.3998345 5.88132125,12.7685345 6.2407434,12.3492086 C6.60016555,11.9298828 7.23146553,11.8813212 7.65079137,12.2407434 L10.4229928,14.616916 L16.7689447,7.81768175 Z" fill="#000000" fill-rule="nonzero" />
+															</svg>
+														</span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="d-flex flex-stack mb-5">
+                                                <span class="fw-bold fs-6 text-gray-800 text-start pe-3">Up to 30 Project Integrations</span>
+                                                <!--begin::Svg Icon | path: icons/duotone/Code/Done-circle.svg-->
+                                                <span class="svg-icon svg-icon-1 svg-icon-success">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+																<path d="M16.7689447,7.81768175 C17.1457787,7.41393107 17.7785676,7.39211077 18.1823183,7.76894473 C18.5860689,8.1457787 18.6078892,8.77856757 18.2310553,9.18231825 L11.2310553,16.6823183 C10.8654446,17.0740439 10.2560456,17.107974 9.84920863,16.7592566 L6.34920863,13.7592566 C5.92988278,13.3998345 5.88132125,12.7685345 6.2407434,12.3492086 C6.60016555,11.9298828 7.23146553,11.8813212 7.65079137,12.2407434 L10.4229928,14.616916 L16.7689447,7.81768175 Z" fill="#000000" fill-rule="nonzero" />
+															</svg>
+														</span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="d-flex flex-stack mb-5">
+                                                <span class="fw-bold fs-6 text-gray-800">Keen Analytics Platform</span>
+                                                <!--begin::Svg Icon | path: icons/duotone/Code/Error-circle.svg-->
+                                                <span class="svg-icon svg-icon-1">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+																<path d="M12.0355339,10.6213203 L14.863961,7.79289322 C15.2544853,7.40236893 15.8876503,7.40236893 16.2781746,7.79289322 C16.6686989,8.18341751 16.6686989,8.81658249 16.2781746,9.20710678 L13.4497475,12.0355339 L16.2781746,14.863961 C16.6686989,15.2544853 16.6686989,15.8876503 16.2781746,16.2781746 C15.8876503,16.6686989 15.2544853,16.6686989 14.863961,16.2781746 L12.0355339,13.4497475 L9.20710678,16.2781746 C8.81658249,16.6686989 8.18341751,16.6686989 7.79289322,16.2781746 C7.40236893,15.8876503 7.40236893,15.2544853 7.79289322,14.863961 L10.6213203,12.0355339 L7.79289322,9.20710678 C7.40236893,8.81658249 7.40236893,8.18341751 7.79289322,7.79289322 C8.18341751,7.40236893 8.81658249,7.40236893 9.20710678,7.79289322 L12.0355339,10.6213203 Z" fill="#000000" />
+															</svg>
+														</span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="d-flex flex-stack mb-5">
+                                                <span class="fw-bold fs-6 text-gray-800">Targets Timelines &amp; Files</span>
+                                                <!--begin::Svg Icon | path: icons/duotone/Code/Error-circle.svg-->
+                                                <span class="svg-icon svg-icon-1">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+																<path d="M12.0355339,10.6213203 L14.863961,7.79289322 C15.2544853,7.40236893 15.8876503,7.40236893 16.2781746,7.79289322 C16.6686989,8.18341751 16.6686989,8.81658249 16.2781746,9.20710678 L13.4497475,12.0355339 L16.2781746,14.863961 C16.6686989,15.2544853 16.6686989,15.8876503 16.2781746,16.2781746 C15.8876503,16.6686989 15.2544853,16.6686989 14.863961,16.2781746 L12.0355339,13.4497475 L9.20710678,16.2781746 C8.81658249,16.6686989 8.18341751,16.6686989 7.79289322,16.2781746 C7.40236893,15.8876503 7.40236893,15.2544853 7.79289322,14.863961 L10.6213203,12.0355339 L7.79289322,9.20710678 C7.40236893,8.81658249 7.40236893,8.18341751 7.79289322,7.79289322 C8.18341751,7.40236893 8.81658249,7.40236893 9.20710678,7.79289322 L12.0355339,10.6213203 Z" fill="#000000" />
+															</svg>
+														</span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="d-flex flex-stack">
+                                                <span class="fw-bold fs-6 text-gray-800">Unlimited Projects</span>
+                                                <!--begin::Svg Icon | path: icons/duotone/Code/Error-circle.svg-->
+                                                <span class="svg-icon svg-icon-1">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+																<path d="M12.0355339,10.6213203 L14.863961,7.79289322 C15.2544853,7.40236893 15.8876503,7.40236893 16.2781746,7.79289322 C16.6686989,8.18341751 16.6686989,8.81658249 16.2781746,9.20710678 L13.4497475,12.0355339 L16.2781746,14.863961 C16.6686989,15.2544853 16.6686989,15.8876503 16.2781746,16.2781746 C15.8876503,16.6686989 15.2544853,16.6686989 14.863961,16.2781746 L12.0355339,13.4497475 L9.20710678,16.2781746 C8.81658249,16.6686989 8.18341751,16.6686989 7.79289322,16.2781746 C7.40236893,15.8876503 7.40236893,15.2544853 7.79289322,14.863961 L10.6213203,12.0355339 L7.79289322,9.20710678 C7.40236893,8.81658249 7.40236893,8.18341751 7.79289322,7.79289322 C8.18341751,7.40236893 8.81658249,7.40236893 9.20710678,7.79289322 L12.0355339,10.6213203 Z" fill="#000000" />
+															</svg>
+														</span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Item-->
+                                        </div>
+                                        <!--end::Features-->
+                                        <!--begin::Select-->
+                                        <a href="#" class="btn btn-primary">Select</a>
+                                        <!--end::Select-->
+                                    </div>
+                                    <!--end::Option-->
+                                </div>
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-xl-4">
+                                <div class="d-flex h-100 align-items-center">
+                                    <!--begin::Option-->
+                                    <div class="w-100 d-flex flex-column flex-center rounded-3 bg-primary py-20 px-10">
+                                        <!--begin::Heading-->
+                                        <div class="mb-7 text-center">
+                                            <!--begin::Title-->
+                                            <h1 class="text-white mb-5 fw-boldest">Business</h1>
+                                            <!--end::Title-->
+                                            <!--begin::Description-->
+                                            <div class="text-white opacity-75 fw-bold mb-5">Best Settings for Business</div>
+                                            <!--end::Description-->
+                                            <!--begin::Price-->
+                                            <div class="text-center">
+                                                <span class="mb-2 text-white">$</span>
+                                                <span class="fs-3x fw-bolder text-white" data-kt-plan-price-month="199" data-kt-plan-price-annual="1999">199</span>
+                                                <span class="fs-7 fw-bold text-white opacity-75" data-kt-plan-price-month="Mon" data-kt-plan-price-annual="Ann">/ Mon</span>
+                                            </div>
+                                            <!--end::Price-->
+                                        </div>
+                                        <!--end::Heading-->
+                                        <!--begin::Features-->
+                                        <div class="w-100 mb-10">
+                                            <!--begin::Item-->
+                                            <div class="d-flex flex-stack mb-5">
+                                                <span class="fw-bold fs-6 text-white opacity-75 text-start pe-3">Up to 10 Active Users</span>
+                                                <!--begin::Svg Icon | path: icons/duotone/Code/Done-circle.svg-->
+                                                <span class="svg-icon svg-icon-1 svg-icon-white">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+																<path d="M16.7689447,7.81768175 C17.1457787,7.41393107 17.7785676,7.39211077 18.1823183,7.76894473 C18.5860689,8.1457787 18.6078892,8.77856757 18.2310553,9.18231825 L11.2310553,16.6823183 C10.8654446,17.0740439 10.2560456,17.107974 9.84920863,16.7592566 L6.34920863,13.7592566 C5.92988278,13.3998345 5.88132125,12.7685345 6.2407434,12.3492086 C6.60016555,11.9298828 7.23146553,11.8813212 7.65079137,12.2407434 L10.4229928,14.616916 L16.7689447,7.81768175 Z" fill="#000000" fill-rule="nonzero" />
+															</svg>
+														</span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="d-flex flex-stack mb-5">
+                                                <span class="fw-bold fs-6 text-white opacity-75 text-start pe-3">Up to 30 Project Integrations</span>
+                                                <!--begin::Svg Icon | path: icons/duotone/Code/Done-circle.svg-->
+                                                <span class="svg-icon svg-icon-1 svg-icon-white">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+																<path d="M16.7689447,7.81768175 C17.1457787,7.41393107 17.7785676,7.39211077 18.1823183,7.76894473 C18.5860689,8.1457787 18.6078892,8.77856757 18.2310553,9.18231825 L11.2310553,16.6823183 C10.8654446,17.0740439 10.2560456,17.107974 9.84920863,16.7592566 L6.34920863,13.7592566 C5.92988278,13.3998345 5.88132125,12.7685345 6.2407434,12.3492086 C6.60016555,11.9298828 7.23146553,11.8813212 7.65079137,12.2407434 L10.4229928,14.616916 L16.7689447,7.81768175 Z" fill="#000000" fill-rule="nonzero" />
+															</svg>
+														</span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="d-flex flex-stack mb-5">
+                                                <span class="fw-bold fs-6 text-white opacity-75 text-start pe-3">Keen Analytics Platform</span>
+                                                <!--begin::Svg Icon | path: icons/duotone/Code/Done-circle.svg-->
+                                                <span class="svg-icon svg-icon-1 svg-icon-white">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+																<path d="M16.7689447,7.81768175 C17.1457787,7.41393107 17.7785676,7.39211077 18.1823183,7.76894473 C18.5860689,8.1457787 18.6078892,8.77856757 18.2310553,9.18231825 L11.2310553,16.6823183 C10.8654446,17.0740439 10.2560456,17.107974 9.84920863,16.7592566 L6.34920863,13.7592566 C5.92988278,13.3998345 5.88132125,12.7685345 6.2407434,12.3492086 C6.60016555,11.9298828 7.23146553,11.8813212 7.65079137,12.2407434 L10.4229928,14.616916 L16.7689447,7.81768175 Z" fill="#000000" fill-rule="nonzero" />
+															</svg>
+														</span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="d-flex flex-stack mb-5">
+                                                <span class="fw-bold fs-6 text-white opacity-75 text-start pe-3">Targets Timelines &amp; Files</span>
+                                                <!--begin::Svg Icon | path: icons/duotone/Code/Done-circle.svg-->
+                                                <span class="svg-icon svg-icon-1 svg-icon-white">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+																<path d="M16.7689447,7.81768175 C17.1457787,7.41393107 17.7785676,7.39211077 18.1823183,7.76894473 C18.5860689,8.1457787 18.6078892,8.77856757 18.2310553,9.18231825 L11.2310553,16.6823183 C10.8654446,17.0740439 10.2560456,17.107974 9.84920863,16.7592566 L6.34920863,13.7592566 C5.92988278,13.3998345 5.88132125,12.7685345 6.2407434,12.3492086 C6.60016555,11.9298828 7.23146553,11.8813212 7.65079137,12.2407434 L10.4229928,14.616916 L16.7689447,7.81768175 Z" fill="#000000" fill-rule="nonzero" />
+															</svg>
+														</span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="d-flex flex-stack">
+                                                <span class="fw-bold fs-6 text-white opacity-75">Unlimited Projects</span>
+                                                <!--begin::Svg Icon | path: icons/duotone/Code/Error-circle.svg-->
+                                                <span class="svg-icon svg-icon-1 svg-icon-white">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+																<path d="M12.0355339,10.6213203 L14.863961,7.79289322 C15.2544853,7.40236893 15.8876503,7.40236893 16.2781746,7.79289322 C16.6686989,8.18341751 16.6686989,8.81658249 16.2781746,9.20710678 L13.4497475,12.0355339 L16.2781746,14.863961 C16.6686989,15.2544853 16.6686989,15.8876503 16.2781746,16.2781746 C15.8876503,16.6686989 15.2544853,16.6686989 14.863961,16.2781746 L12.0355339,13.4497475 L9.20710678,16.2781746 C8.81658249,16.6686989 8.18341751,16.6686989 7.79289322,16.2781746 C7.40236893,15.8876503 7.40236893,15.2544853 7.79289322,14.863961 L10.6213203,12.0355339 L7.79289322,9.20710678 C7.40236893,8.81658249 7.40236893,8.18341751 7.79289322,7.79289322 C8.18341751,7.40236893 8.81658249,7.40236893 9.20710678,7.79289322 L12.0355339,10.6213203 Z" fill="#000000" />
+															</svg>
+														</span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Item-->
+                                        </div>
+                                        <!--end::Features-->
+                                        <!--begin::Select-->
+                                        <a href="#" class="btn btn-color-primary btn-active-light-primary btn-white">Select</a>
+                                        <!--end::Select-->
+                                    </div>
+                                    <!--end::Option-->
+                                </div>
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-xl-4">
+                                <div class="d-flex h-100 align-items-center">
+                                    <!--begin::Option-->
+                                    <div class="w-100 d-flex flex-column flex-center rounded-3 bg-white py-15 px-10">
+                                        <!--begin::Heading-->
+                                        <div class="mb-7 text-center">
+                                            <!--begin::Title-->
+                                            <h1 class="text-dark mb-5 fw-boldest">Enterprise</h1>
+                                            <!--end::Title-->
+                                            <!--begin::Description-->
+                                            <div class="text-gray-400 fw-bold mb-5">Best Settings for Enterprise</div>
+                                            <!--end::Description-->
+                                            <!--begin::Price-->
+                                            <div class="text-center">
+                                                <span class="mb-2 text-primary">$</span>
+                                                <span class="fs-3x fw-bolder text-primary" data-kt-plan-price-month="999" data-kt-plan-price-annual="9999">999</span>
+                                                <span class="fs-7 fw-bold opacity-50" data-kt-plan-price-month="Mon" data-kt-plan-price-annual="Ann">/ Mon</span>
+                                            </div>
+                                            <!--end::Price-->
+                                        </div>
+                                        <!--end::Heading-->
+                                        <!--begin::Features-->
+                                        <div class="w-100 mb-10">
+                                            <!--begin::Item-->
+                                            <div class="d-flex flex-stack mb-5">
+                                                <span class="fw-bold fs-6 text-gray-800 text-start pe-3">Up to 10 Active Users</span>
+                                                <!--begin::Svg Icon | path: icons/duotone/Code/Done-circle.svg-->
+                                                <span class="svg-icon svg-icon-1 svg-icon-success">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+																<path d="M16.7689447,7.81768175 C17.1457787,7.41393107 17.7785676,7.39211077 18.1823183,7.76894473 C18.5860689,8.1457787 18.6078892,8.77856757 18.2310553,9.18231825 L11.2310553,16.6823183 C10.8654446,17.0740439 10.2560456,17.107974 9.84920863,16.7592566 L6.34920863,13.7592566 C5.92988278,13.3998345 5.88132125,12.7685345 6.2407434,12.3492086 C6.60016555,11.9298828 7.23146553,11.8813212 7.65079137,12.2407434 L10.4229928,14.616916 L16.7689447,7.81768175 Z" fill="#000000" fill-rule="nonzero" />
+															</svg>
+														</span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="d-flex flex-stack mb-5">
+                                                <span class="fw-bold fs-6 text-gray-800 text-start pe-3">Up to 30 Project Integrations</span>
+                                                <!--begin::Svg Icon | path: icons/duotone/Code/Done-circle.svg-->
+                                                <span class="svg-icon svg-icon-1 svg-icon-success">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+																<path d="M16.7689447,7.81768175 C17.1457787,7.41393107 17.7785676,7.39211077 18.1823183,7.76894473 C18.5860689,8.1457787 18.6078892,8.77856757 18.2310553,9.18231825 L11.2310553,16.6823183 C10.8654446,17.0740439 10.2560456,17.107974 9.84920863,16.7592566 L6.34920863,13.7592566 C5.92988278,13.3998345 5.88132125,12.7685345 6.2407434,12.3492086 C6.60016555,11.9298828 7.23146553,11.8813212 7.65079137,12.2407434 L10.4229928,14.616916 L16.7689447,7.81768175 Z" fill="#000000" fill-rule="nonzero" />
+															</svg>
+														</span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="d-flex flex-stack mb-5">
+                                                <span class="fw-bold fs-6 text-gray-800 text-start pe-3">Keen Analytics Platform</span>
+                                                <!--begin::Svg Icon | path: icons/duotone/Code/Done-circle.svg-->
+                                                <span class="svg-icon svg-icon-1 svg-icon-success">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+																<path d="M16.7689447,7.81768175 C17.1457787,7.41393107 17.7785676,7.39211077 18.1823183,7.76894473 C18.5860689,8.1457787 18.6078892,8.77856757 18.2310553,9.18231825 L11.2310553,16.6823183 C10.8654446,17.0740439 10.2560456,17.107974 9.84920863,16.7592566 L6.34920863,13.7592566 C5.92988278,13.3998345 5.88132125,12.7685345 6.2407434,12.3492086 C6.60016555,11.9298828 7.23146553,11.8813212 7.65079137,12.2407434 L10.4229928,14.616916 L16.7689447,7.81768175 Z" fill="#000000" fill-rule="nonzero" />
+															</svg>
+														</span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="d-flex flex-stack mb-5">
+                                                <span class="fw-bold fs-6 text-gray-800 text-start pe-3">Targets Timelines &amp; Files</span>
+                                                <!--begin::Svg Icon | path: icons/duotone/Code/Done-circle.svg-->
+                                                <span class="svg-icon svg-icon-1 svg-icon-success">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+																<path d="M16.7689447,7.81768175 C17.1457787,7.41393107 17.7785676,7.39211077 18.1823183,7.76894473 C18.5860689,8.1457787 18.6078892,8.77856757 18.2310553,9.18231825 L11.2310553,16.6823183 C10.8654446,17.0740439 10.2560456,17.107974 9.84920863,16.7592566 L6.34920863,13.7592566 C5.92988278,13.3998345 5.88132125,12.7685345 6.2407434,12.3492086 C6.60016555,11.9298828 7.23146553,11.8813212 7.65079137,12.2407434 L10.4229928,14.616916 L16.7689447,7.81768175 Z" fill="#000000" fill-rule="nonzero" />
+															</svg>
+														</span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="d-flex flex-stack">
+                                                <span class="fw-bold fs-6 text-gray-800 text-start pe-3">Unlimited Projects</span>
+                                                <!--begin::Svg Icon | path: icons/duotone/Code/Done-circle.svg-->
+                                                <span class="svg-icon svg-icon-1 svg-icon-success">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+																<path d="M16.7689447,7.81768175 C17.1457787,7.41393107 17.7785676,7.39211077 18.1823183,7.76894473 C18.5860689,8.1457787 18.6078892,8.77856757 18.2310553,9.18231825 L11.2310553,16.6823183 C10.8654446,17.0740439 10.2560456,17.107974 9.84920863,16.7592566 L6.34920863,13.7592566 C5.92988278,13.3998345 5.88132125,12.7685345 6.2407434,12.3492086 C6.60016555,11.9298828 7.23146553,11.8813212 7.65079137,12.2407434 L10.4229928,14.616916 L16.7689447,7.81768175 Z" fill="#000000" fill-rule="nonzero" />
+															</svg>
+														</span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Item-->
+                                        </div>
+                                        <!--end::Features-->
+                                        <!--begin::Select-->
+                                        <a href="#" class="btn btn-primary">Select</a>
+                                        <!--end::Select-->
+                                    </div>
+                                    <!--end::Option-->
+                                </div>
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Row-->
+                    </div>
+                    <!--end::Pricing-->
+                </div>
+                <!--end::Plans-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Wrapper-->
+        <!--begin::Curve bottom-->
+        <div class="landing-curve landing-dark-color">
+            <svg viewBox="15 12 1470 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 11C3.93573 11.3356 7.85984 11.6689 11.7725 12H1488.16C1492.1 11.6689 1496.04 11.3356 1500 11V12H1488.16C913.668 60.3476 586.282 60.6117 11.7725 12H0V11Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <!--end::Curve bottom-->
+    </div>
+    <!--end::Pricing Section-->
+    <!--begin::Testimonials Section-->
+    <div class="mt-20 mb-n20 position-relative z-index-2">
+        <!--begin::Container-->
+        <div class="container">
+            <!--begin::Heading-->
+            <div class="text-center mb-17">
+                <!--begin::Title-->
+                <h3 class="fs-2hx text-dark mb-5" id="clients" data-kt-scroll-offset="{default: 125, lg: 150}">What Our Clients Say</h3>
+                <!--end::Title-->
+                <!--begin::Description-->
+                <div class="fs-5 text-muted fw-bold">Save thousands to millions of bucks by using single tool
+                    <br />for different amazing and great useful admin</div>
+                <!--end::Description-->
+            </div>
+            <!--end::Heading-->
+            <!--begin::Row-->
+            <div class="row g-lg-10 mb-10 mb-lg-20">
+                <!--begin::Col-->
+                <div class="col-lg-4">
+                    <!--begin::Testimonial-->
+                    <div class="d-flex flex-column justify-content-between h-lg-100 px-10 px-lg-0 pe-lg-10 mb-15 mb-lg-0">
+                        <!--begin::Wrapper-->
+                        <div class="mb-7">
+                            <!--begin::Rating-->
+                            <div class="rating mb-6">
+                                <div class="rating-label me-2 checked">
+                                    <i class="bi bi-star-fill fs-5"></i>
+                                </div>
+                                <div class="rating-label me-2 checked">
+                                    <i class="bi bi-star-fill fs-5"></i>
+                                </div>
+                                <div class="rating-label me-2 checked">
+                                    <i class="bi bi-star-fill fs-5"></i>
+                                </div>
+                                <div class="rating-label me-2 checked">
+                                    <i class="bi bi-star-fill fs-5"></i>
+                                </div>
+                                <div class="rating-label me-2 checked">
+                                    <i class="bi bi-star-fill fs-5"></i>
+                                </div>
+                            </div>
+                            <!--end::Rating-->
+                            <!--begin::Title-->
+                            <div class="fs-2 fw-bolder text-dark mb-3">This is by far the cleanest template
+                                <br />and the most well structured</div>
+                            <!--end::Title-->
+                            <!--begin::Feedback-->
+                            <div class="text-gray-500 fw-bold fs-4">The most well thought out design theme I have ever used. The codes are up to tandard. The css styles are very clean. In fact the cleanest and the most up to standard I have ever seen.</div>
+                            <!--end::Feedback-->
+                        </div>
+                        <!--end::Wrapper-->
+                        <!--begin::Author-->
+                        <div class="d-flex align-items-center">
+                            <!--begin::Avatar-->
+                            <div class="symbol symbol-circle symbol-50px me-5">
+                                <img src="{{ asset('web/media/avatars/150-2.jpg') }}" class="" alt="" />
+                            </div>
+                            <!--end::Avatar-->
+                            <!--begin::Name-->
+                            <div class="flex-grow-1">
+                                <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">Paul Miles</a>
+                                <span class="text-muted d-block fw-bold">Development Lead</span>
+                            </div>
+                            <!--end::Name-->
+                        </div>
+                        <!--end::Author-->
+                    </div>
+                    <!--end::Testimonial-->
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-lg-4">
+                    <!--begin::Testimonial-->
+                    <div class="d-flex flex-column justify-content-between h-lg-100 px-10 px-lg-0 pe-lg-10 mb-15 mb-lg-0">
+                        <!--begin::Wrapper-->
+                        <div class="mb-7">
+                            <!--begin::Rating-->
+                            <div class="rating mb-6">
+                                <div class="rating-label me-2 checked">
+                                    <i class="bi bi-star-fill fs-5"></i>
+                                </div>
+                                <div class="rating-label me-2 checked">
+                                    <i class="bi bi-star-fill fs-5"></i>
+                                </div>
+                                <div class="rating-label me-2 checked">
+                                    <i class="bi bi-star-fill fs-5"></i>
+                                </div>
+                                <div class="rating-label me-2 checked">
+                                    <i class="bi bi-star-fill fs-5"></i>
+                                </div>
+                                <div class="rating-label me-2 checked">
+                                    <i class="bi bi-star-fill fs-5"></i>
+                                </div>
+                            </div>
+                            <!--end::Rating-->
+                            <!--begin::Title-->
+                            <div class="fs-2 fw-bolder text-dark mb-3">This is by far the cleanest template
+                                <br />and the most well structured</div>
+                            <!--end::Title-->
+                            <!--begin::Feedback-->
+                            <div class="text-gray-500 fw-bold fs-4">The most well thought out design theme I have ever used. The codes are up to tandard. The css styles are very clean. In fact the cleanest and the most up to standard I have ever seen.</div>
+                            <!--end::Feedback-->
+                        </div>
+                        <!--end::Wrapper-->
+                        <!--begin::Author-->
+                        <div class="d-flex align-items-center">
+                            <!--begin::Avatar-->
+                            <div class="symbol symbol-circle symbol-50px me-5">
+                                <img src="{{ asset('web/media/avatars/150-3.jpg') }}" class="" alt="" />
+                            </div>
+                            <!--end::Avatar-->
+                            <!--begin::Name-->
+                            <div class="flex-grow-1">
+                                <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">Janya Clebert</a>
+                                <span class="text-muted d-block fw-bold">Development Lead</span>
+                            </div>
+                            <!--end::Name-->
+                        </div>
+                        <!--end::Author-->
+                    </div>
+                    <!--end::Testimonial-->
+                </div>
+                <!--end::Col-->
+                <!--begin::Col-->
+                <div class="col-lg-4">
+                    <!--begin::Testimonial-->
+                    <div class="d-flex flex-column justify-content-between h-lg-100 px-10 px-lg-0 pe-lg-10 mb-15 mb-lg-0">
+                        <!--begin::Wrapper-->
+                        <div class="mb-7">
+                            <!--begin::Rating-->
+                            <div class="rating mb-6">
+                                <div class="rating-label me-2 checked">
+                                    <i class="bi bi-star-fill fs-5"></i>
+                                </div>
+                                <div class="rating-label me-2 checked">
+                                    <i class="bi bi-star-fill fs-5"></i>
+                                </div>
+                                <div class="rating-label me-2 checked">
+                                    <i class="bi bi-star-fill fs-5"></i>
+                                </div>
+                                <div class="rating-label me-2 checked">
+                                    <i class="bi bi-star-fill fs-5"></i>
+                                </div>
+                                <div class="rating-label me-2 checked">
+                                    <i class="bi bi-star-fill fs-5"></i>
+                                </div>
+                            </div>
+                            <!--end::Rating-->
+                            <!--begin::Title-->
+                            <div class="fs-2 fw-bolder text-dark mb-3">This is by far the cleanest template
+                                <br />and the most well structured</div>
+                            <!--end::Title-->
+                            <!--begin::Feedback-->
+                            <div class="text-gray-500 fw-bold fs-4">The most well thought out design theme I have ever used. The codes are up to tandard. The css styles are very clean. In fact the cleanest and the most up to standard I have ever seen.</div>
+                            <!--end::Feedback-->
+                        </div>
+                        <!--end::Wrapper-->
+                        <!--begin::Author-->
+                        <div class="d-flex align-items-center">
+                            <!--begin::Avatar-->
+                            <div class="symbol symbol-circle symbol-50px me-5">
+                                <img src="{{ asset('web/media/avatars/150-18.jpg') }}" class="" alt="" />
+                            </div>
+                            <!--end::Avatar-->
+                            <!--begin::Name-->
+                            <div class="flex-grow-1">
+                                <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">Steave Brown</a>
+                                <span class="text-muted d-block fw-bold">Development Lead</span>
+                            </div>
+                            <!--end::Name-->
+                        </div>
+                        <!--end::Author-->
+                    </div>
+                    <!--end::Testimonial-->
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Row-->
+            <!--begin::Highlight-->
+            <div class="d-flex flex-stack flex-wrap flex-md-nowrap card-rounded shadow p-8 p-lg-12 mb-n5 mb-lg-n13"
+            {{$styleCss}}="background: linear-gradient(90deg, #20AA3E 0%, #03A588 100%);">
+            <!--begin::Content-->
+            <div class="my-2 me-5">
+                <!--begin::Title-->
+                <div class="fs-1 fs-lg-2qx fw-bolder text-white mb-2">Start With Metronic Today,
+                    <span class="fw-normal">Speed Up Development!</span></div>
+                <!--end::Title-->
+                <!--begin::Description-->
+                <div class="fs-6 fs-lg-5 text-white fw-bold opacity-75">Join over 100,000 Professionals Community to
+                    Stay Ahead
+                </div>
+                <!--end::Description-->
+            </div>
+            <!--end::Content-->
+            <!--begin::Link-->
+            <a href="#" class="btn btn-lg btn-outline border-2 btn-outline-white flex-shrink-0 my-2">Purchase on
+                Themeforest</a>
+            <!--end::Link-->
+        </div>
+        <!--end::Highlight-->
+    </div>
+    <!--end::Container-->
+    </div>
+    <!--end::Testimonials Section-->
+    <!--begin::Footer Section-->
+    <div class="mb-0">
+        <!--begin::Curve top-->
+        <div class="landing-curve landing-dark-color">
+            <svg viewBox="15 -1 1470 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 48C4.93573 47.6644 8.85984 47.3311 12.7725 47H1489.16C1493.1 47.3311 1497.04 47.6644 1501 48V47H1489.16C914.668 -1.34764 587.282 -1.61174 12.7725 47H1V48Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <!--end::Curve top-->
+        <!--begin::Wrapper-->
+        <div class="landing-dark-bg pt-20">
+            <!--begin::Container-->
+            <div class="container">
+                <!--begin::Row-->
+                <div class="row py-10 py-lg-20">
+                    <!--begin::Col-->
+                    <div class="col-lg-6 pe-lg-16 mb-10 mb-lg-0">
+                        <!--begin::Block-->
+                        <div class="rounded landing-dark-border p-9 mb-10">
+                            <!--begin::Title-->
+                            <h2 class="text-white">Would you need a Custom License?</h2>
+                            <!--end::Title-->
+                            <!--begin::Text-->
+                            <span class="fw-normal fs-4 text-gray-700">Email us to
+									<a href="https://keenthemes.com/support" class="text-white opacity-50 text-hover-primary">support@keenthemes.com</a></span>
+                            <!--end::Text-->
+                        </div>
+                        <!--end::Block-->
+                        <!--begin::Block-->
+                        <div class="rounded landing-dark-border p-9">
+                            <!--begin::Title-->
+                            <h2 class="text-white">How About a Custom Project?</h2>
+                            <!--end::Title-->
+                            <!--begin::Text-->
+                            <span class="fw-normal fs-4 text-gray-700">Use Our Custom Development Service.
+									<a href="pages/profile/overview.html" class="text-white opacity-50 text-hover-primary">Click to Get a Quote</a></span>
+                            <!--end::Text-->
+                        </div>
+                        <!--end::Block-->
+                    </div>
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-lg-6 ps-lg-16">
+                        <!--begin::Navs-->
+                        <div class="d-flex justify-content-center">
+                            <!--begin::Links-->
+                            <div class="d-flex fw-bold flex-column me-20">
+                                <!--begin::Subtitle-->
+                                <h4 class="fw-bolder text-gray-400 mb-6">More for Metronic</h4>
+                                <!--end::Subtitle-->
+                                <!--begin::Link-->
+                                <a href="#" class="text-white opacity-50 text-hover-primary fs-5 mb-6">FAQ</a>
+                                <!--end::Link-->
+                                <!--begin::Link-->
+                                <a href="#" class="text-white opacity-50 text-hover-primary fs-5 mb-6">Documentaions</a>
+                                <!--end::Link-->
+                                <!--begin::Link-->
+                                <a href="#" class="text-white opacity-50 text-hover-primary fs-5 mb-6">Video Tuts</a>
+                                <!--end::Link-->
+                                <!--begin::Link-->
+                                <a href="#" class="text-white opacity-50 text-hover-primary fs-5 mb-6">Changelog</a>
+                                <!--end::Link-->
+                                <!--begin::Link-->
+                                <a href="#" class="text-white opacity-50 text-hover-primary fs-5 mb-6">Github</a>
+                                <!--end::Link-->
+                                <!--begin::Link-->
+                                <a href="#" class="text-white opacity-50 text-hover-primary fs-5">Tutorials</a>
+                                <!--end::Link-->
+                            </div>
+                            <!--end::Links-->
+                            <!--begin::Links-->
+                            <div class="d-flex fw-bold flex-column ms-lg-20">
+                                <!--begin::Subtitle-->
+                                <h4 class="fw-bolder text-gray-400 mb-6">Stay Connected</h4>
+                                <!--end::Subtitle-->
+                                <!--begin::Link-->
+                                <a href="#" class="mb-6">
+                                    <img src="{{ asset('web/media/svg/brand-logos/facebook-4.svg') }}" class="h-20px me-2" alt="" />
+                                    <span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Facebook</span>
+                                </a>
+                                <!--end::Link-->
+                                <!--begin::Link-->
+                                <a href="#" class="mb-6">
+                                    <img src="{{ asset('web/media/svg/brand-logos/github.svg') }}" class="h-20px me-2" alt="" />
+                                    <span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Github</span>
+                                </a>
+                                <!--end::Link-->
+                                <!--begin::Link-->
+                                <a href="#" class="mb-6">
+                                    <img src="{{ asset('web/media/svg/brand-logos/twitter.svg') }}" class="h-20px me-2" alt="" />
+                                    <span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Twitter</span>
+                                </a>
+                                <!--end::Link-->
+                                <!--begin::Link-->
+                                <a href="#" class="mb-6">
+                                    <img src="{{ asset('web/media/svg/brand-logos/dribbble-icon-1.svg') }}" class="h-20px me-2" alt="" />
+                                    <span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Dribbble</span>
+                                </a>
+                                <!--end::Link-->
+                                <!--begin::Link-->
+                                <a href="#" class="mb-6">
+                                    <img src="{{ asset('web/media/svg/brand-logos/instagram-2-1.svg') }}" class="h-20px me-2" alt="" />
+                                    <span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Instagram</span>
+                                </a>
+                                <!--end::Link-->
+                            </div>
+                            <!--end::Links-->
+                        </div>
+                        <!--end::Navs-->
+                    </div>
+                    <!--end::Col-->
+                </div>
+                <!--end::Row-->
+            </div>
+            <!--end::Container-->
+            <!--begin::Separator-->
+            <div class="landing-dark-separator"></div>
+            <!--end::Separator-->
+            <!--begin::Container-->
+            <div class="container">
+                <!--begin::Wrapper-->
+                <div class="d-flex flex-column flex-md-row flex-stack py-7 py-lg-10">
+                    <!--begin::Copyright-->
+                    <div class="d-flex align-items-center order-2 order-md-1">
+                        <!--begin::Logo-->
+                        <a href="landing.html">
+                            <img alt="Logo" src="{{ asset('web/media/logos/logo-landing.svg') }}" class="h-15px h-md-20px" />
+                        </a>
+                        <!--end::Logo image-->
+                        <!--begin::Logo image-->
+                        <span class="mx-5 fs-6 fw-bold text-gray-600 pt-1" href="https://keenthemes.com">© 2021 Keenthemes Inc.</span>
+                        <!--end::Logo image-->
+                    </div>
+                    <!--end::Copyright-->
+                    <!--begin::Menu-->
+                    <ul class="menu menu-gray-600 menu-hover-primary fw-bold fs-6 fs-md-5 order-1 mb-5 mb-md-0">
+                        <li class="menu-item">
+                            <a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a>
+                        </li>
+                        <li class="menu-item mx-5">
+                            <a href="https://keenthemes.com/support" target="_blank" class="menu-link px-2">Support</a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="" target="_blank" class="menu-link px-2">Purchase</a>
+                        </li>
+                    </ul>
+                    <!--end::Menu-->
+                </div>
+                <!--end::Wrapper-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Wrapper-->
+    </div>
+    <!--end::Footer Section-->
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+        <!--begin::Svg Icon | path: icons/duotone/Navigation/Up-2.svg-->
+        <span class="svg-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                         version="1.1">
+						<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+							<polygon points="0 0 24 0 24 24 0 24"/>
+							<rect fill="#000000" opacity="0.5" x="11" y="10" width="2" height="10" rx="1"/>
+							<path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z"
+                                  fill="#000000" fill-rule="nonzero"/>
+						</g>
+					</svg>
+				</span>
+        <!--end::Svg Icon-->
+    </div>
+    <!--end::Scrolltop-->
+    </div>
+@endsection
