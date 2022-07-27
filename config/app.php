@@ -58,6 +58,10 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'media_disc' => env('MEDIA_DISK', 'public'),
+
+    'enable_upgrade_route' => env('ENABLE_UPGRADE_ROUTE', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -127,6 +131,24 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Maintenance Mode Driver
+    |--------------------------------------------------------------------------
+    |
+    | These configuration options determine the driver used to determine and
+    | manage Laravel's "maintenance mode" status. The "cache" driver will
+    | allow maintenance mode to be controlled across multiple machines.
+    |
+    | Supported drivers: "file", "cache"
+    |
+    */
+
+    'maintenance' => [
+        'driver' => 'file',
+        // 'store'  => 'redis',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |
@@ -167,6 +189,11 @@ return [
         /*
          * Package Service Providers...
          */
+        Spatie\Permission\PermissionServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+        Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -176,6 +203,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Mews\Purifier\PurifierServiceProvider::class,
 
     ],
 
@@ -191,7 +219,11 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
+        'Datatables' => \Yajra\DataTables\Facades\DataTables::class,
+        'Debugger' => Barryvdh\Debugbar\Facades\Debugbar::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Purifier' => Mews\Purifier\Facades\Purifier::class,
     ])->toArray(),
 
 ];
