@@ -37,7 +37,35 @@ use App\Http\Controllers\AdminWalletController;
 require __DIR__.'/auth.php';
 
 Route::middleware(['xss'])->group(function () {
-    
+    Route::get('/', function () {
+        if (Auth::check()) {
+            if (Auth::user()->hasRole('admin')) {
+                return Redirect::to(getDashboardURL());
+            }
+
+            return Redirect::to(getClientDashboardURL());
+        }
+
+        return redirect(route('login'));
+    });
+
+    Route::post('update-language', [UserController::class, 'updateLanguage'])->name('change-language');
+    //Notification routes
+    Route::get('/notification/{notification}/read',
+        [NotificationController::class, 'readNotification'])->name('read.notification');
+    Route::post('/read-all-notification',
+        [NotificationController::class, 'readAllNotification'])->name('read.all.notification');
+    //update darkMode Field
+    Route::get('update-dark-mode', [UserController::class, 'updateDarkMode'])->name('update-dark-mode');
+
+    Route::get('invoice/{invoiceId}', [InvoiceController::class, 'showPublicInvoice'])->name('invoice-show-url');
+    Route::get('quote/{quoteId}', [QuoteController::class, 'showPublicQuote'])->name('quote-show-url');
+    Route::get('invoice/{invoiceId}/payment',
+        [InvoiceController::class, 'showPublicPayment'])->name('invoices.public-payment');
+    Route::get('invoice-pdf/{invoice}',
+        [InvoiceController::class, 'getPublicInvoicePdf'])->name('public-view-invoice.pdf');
+    Route::get('quote-pdf/{quote}',
+        [QuoteController::class, 'getPublicQuotePdf'])->name('public-view-quote.pdf');
 });
 
 Route::prefix('client')->middleware(['auth', 'xss', 'role:client'])->group(function () {
