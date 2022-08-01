@@ -36,6 +36,10 @@ use App\Http\Controllers\AdminWalletController;
 
 require __DIR__.'/auth.php';
 
+Route::middleware(['xss'])->group(function () {
+    
+});
+
 Route::prefix('client')->middleware(['auth', 'xss', 'role:client'])->group(function () {
     Route::get('dashboard',
         [Client\DashboardController::class, 'index'])->name('client.dashboard');
