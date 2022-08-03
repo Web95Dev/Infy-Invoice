@@ -1,0 +1,15 @@
+<div class="me-2 mb-3 mb-sm-0">
+    <a href="{{ route('admin.paymentsExcel') }}" data-turbo="false" type="button" class="btn btn-outline-success">
+        <i class="fas fa-file-excel me-1"></i> {{__('messages.invoice.excel_export')}}
+    </a>
+</div>
+<div class="my-3 my-sm-3">
+    <a href="{{ route('admin.payments.pdf') }}" type="button" class="btn btn-outline-info me-2" data-turbo="false">
+        <i class="fas fa-file-pdf me-1"></i> {{__('messages.pdf_export')}}
+    </a>
+</div>
+<div>
+    <button type="button" class="btn btn-primary addPayment">
+        {{ __('messages.update_wallet') }}
+    </button>
+</div>
