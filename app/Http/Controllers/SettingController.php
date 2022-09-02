@@ -28,5 +28,53 @@ class SettingController extends AppBaseController
      * @param  Request  $request
      * @return Application|Factory|View
      */
-    
+    public function edit(Request $request)
+    {
+        $defaultSettings = $this->settingRepository->editSettingsData();
+        $sectionName = ($request->section === null) ? 'general' : $request->section;
+
+        return view("settings.$sectionName", compact('sectionName'), $defaultSettings);
+    }
+
+    /**
+     * @param UpdateSettingRequest $request
+     * @return RedirectResponse
+     */
+    public function update(UpdateSettingRequest $request)
+    {
+        $this->settingRepository->updateSetting($request->all());
+        Flash::success('Setting updated successfully.');
+
+        return redirect()->back();
+    }   
+
+    //Invoice Update
+    public function invoiceUpdate(Request $request)
+    {
+        $this->settingRepository->updateInvoiceSetting($request->all());
+        Flash::success('Invoice template updated successfully');
+
+        return redirect('admin/settings?section=setting-invoice');
+    }
+
+    /**
+     * @param $key
+     * @return mixed
+     */
+    public function editInvoiceTemplate($key)
+    {
+        $invoiceTemplate = InvoiceSetting::where('key', $key)->get();
+
+        return $this->sendResponse($invoiceTemplate, 'InvoiceTemplate retrieved successfully.');
+    }
+
+    /**
+     * @return Application|Factory|View
+     */
+    public function invoiceSettings()
+    {
+        $data['settings'] = $this->settingRepository->getSyncList();
+
+        return view('settings.invoice-settings', $data);
+    }
 }
