@@ -266,4 +266,6 @@ class QuoteController extends AppBaseController
         
         return $quotesPdf->download('Quotes.pdf');
     }
+
+    
 }
