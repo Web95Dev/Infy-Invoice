@@ -5,27 +5,26 @@ namespace App\Http\Requests;
 use App\Models\Quote;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateClientQuoteRequest extends FormRequest
+class CreateQuoteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
 
     /**
-     * @return array|string[]
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
      */
-    public function rules(): array
+    public function rules()
     {
-        $rules = Quote::$rules;
-        $rules['quote_id'] = 'required|unique:quotes,quote_id,'.$this->route('quote')->id;
-
-        return $rules;
+        return Quote::$rules;
     }
 
     public function messages(): array
