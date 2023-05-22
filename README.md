@@ -7,9 +7,9 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Infy
+## About Enfee
 
-Infosys Limited is an multinational information technology company that provides business consulting, information technology and outsourcing services.
+Enfee is an multinational information technology company that provides business consulting, information technology and outsourcing services.
 
 ## Contributing
 
