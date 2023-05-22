@@ -1,6 +1,27 @@
 <?php
 
+use App\Http\Controllers\AdminPaymentController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Client as Client;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\InvoiceTemplateController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentGatewayController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\TaxController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\AdminWalletController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +34,65 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+require __DIR__.'/auth.php';
+
+Route::prefix('client')->middleware(['auth', 'xss', 'role:client'])->group(function () {
+    Route::get('dashboard',
+        [Client\DashboardController::class, 'index'])->name('client.dashboard');
+
+    Route::get('transactions', [Client\PaymentController::class, 'index'])->name('client.transactions.index');
+
+    //Expenses
+    Route::get('expenses', [Client\ExpensesController::class, 'index'])->name('client.expenses.index');
+
+    //Invoice
+    Route::get('invoices',
+        [Client\InvoiceController::class, 'index'])->name('client.invoices.index');
+    Route::get('invoices/{invoice}',
+        [Client\InvoiceController::class, 'show'])->name('client.invoices.show');
+    Route::get('invoices/{invoice}/pdf',
+        [Client\InvoiceController::class, 'convertToPdf'])->name('clients.invoices.pdf');
+
+    //Quote
+    Route::name('client.')->group(function () {
+        Route::resource('quotes', Client\QuoteController::class);
+    });
+    Route::get('quotes/{quote}/pdf',
+        [Client\QuoteController::class, 'convertToPdf'])->name('client.quotes.pdf');
+
+    //export quotes Excel file in client route
+    Route::get('/quotes-excel',[Client\QuoteController::class, 'exportQuotesExcel'])->name('client.quotesExcel');
+    // export quotes Pdf in client route
+    Route::get('quotes-pdf', [Client\QuoteController::class, 'exportQuotesPdf'])->name('client.export.quotes.pdf');
+    // export invoices Pdf in client route
+    Route::get('/invoice-excel', [client\InvoiceController::class, 'exportInvoicesExcel'])->name('client.invoicesExcel');
+    Route::get('invoice-pdf', [client\InvoiceController::class, 'exportInvoicesPdf'])->name('client.invoices.pdf');
+    Route::get('transactions-excel', [client\PaymentController::class, 'exportTransactionsExcel'])->name('client.transactionsExcel');
+    // export transactions Pdf in client route
+    Route::get('transactions-pdf', [client\PaymentController::class, 'exportTransactionsPdf'])->name('client.export.transactions.pdf');
 });
+
+Route::prefix('client')->middleware('xss')->group(function () {
+    Route::get('invoices/{invoice}/payment', [Client\PaymentController::class, 'show'])->name('clients.payments.show');
+    //Payments
+    Route::post('payments', [Client\PaymentController::class, 'store'])->name('clients.payments.store');
+    Route::post('stripe-payment', [Client\StripeController::class, 'createSession'])->name('client.stripe-payment');
+    Route::get('razorpay-onboard', [Client\RazorpayController::class, 'onBoard'])->name('razorpay.init');
+    Route::get('paypal-onboard', [Client\PaypalController::class, 'onBoard'])->name('paypal.init');
+
+    Route::get('payment-success', [Client\StripeController::class, 'paymentSuccess'])->name('payment-success');
+    Route::get('failed-payment', [Client\StripeController::class, 'handleFailedPayment'])->name('failed-payment');
+
+    Route::get('paypal-payment-success', [Client\PaypalController::class, 'success'])->name('paypal.success');
+    Route::get('paypal-payment-failed', [Client\PaypalController::class, 'failed'])->name('paypal.failed');
+
+    // razorpay payment
+    Route::post('razorpay-payment-success', [Client\RazorpayController::class, 'paymentSuccess'])
+        ->name('razorpay.success');
+    Route::post('razorpay-payment-failed', [Client\RazorpayController::class, 'paymentFailed'])
+        ->name('razorpay.failed')->middleware('');
+    Route::get('razorpay-payment-webhook', [Client\RazorpayController::class, 'paymentSuccessWebHook'])
+        ->name('razorpay.webhook');
+});
+
+require __DIR__.'/upgrade.php';

@@ -23,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        if (getCurrentTimeZone() != null) {
+            date_default_timezone_set(getCurrentTimeZone());
+        }
     }
 }
